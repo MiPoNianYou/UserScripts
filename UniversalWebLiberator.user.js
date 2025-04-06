@@ -1,20 +1,20 @@
 // ==UserScript==
 // @name         网页限制解除器
 // @description  深度解除网页复制内容限制 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能
-// @version      1.1.0
+// @version      1.0.1
 // @author       念柚
 // @namespace    https://github.com/MiPoNianYou/UserScripts
 // @license      GPL-3.0
 // @match        *://*/*
 // @grant        none
 // @run-at       document-start
+// @downloadURL none
 // ==/UserScript==
 
-class EnhancedLiberator {
+class CopyRestrictionRemover {
     constructor() {
         this.InitializeObserver();
         this.ExecuteCoreFeatures();
-        this.HijackEventListeners();
     }
 
     ExecuteCoreFeatures() {
@@ -26,86 +26,96 @@ class EnhancedLiberator {
     }
 
     BindGlobalEventHandlers() {
-        const events = [
-            ['contextmenu', e => e.stopImmediatePropagation()],
-            ['selectstart', e => e.stopImmediatePropagation()],
-            ['copy', e => e.stopImmediatePropagation()],
-            ['cut', e => e.stopImmediatePropagation()],
-            ['paste', e => e.stopImmediatePropagation()]
+        const EventConfigurations = [
+            ['contextmenu', this.HandleContextMenu],
+            ['selectstart', this.HandleSelection],
+            ['copy', this.HandleClipboard],
+            ['cut', this.HandleClipboard],
+            ['paste', this.HandleClipboard]
         ];
-        events.forEach(([type, handler]) => {
-            document.addEventListener(type, handler, {capture: true, passive: true});
+
+        EventConfigurations.forEach(([eventType, handler]) => {
+            document.addEventListener(eventType, handler.bind(this), true);
         });
     }
 
+    HandleContextMenu(event) {
+        event.stopPropagation();
+        return true;
+    }
+
+    HandleSelection(event) {
+        event.stopPropagation();
+        return true;
+    }
+
+    HandleClipboard(event) {
+        event.stopPropagation();
+        return true;
+    }
+
     InjectLiberationStyles() {
-        const css = `*,*::before,*::after{
-            -webkit-user-select:text!important;
-            user-select:text!important;
-            -webkit-user-drag:auto!important;
-            user-drag:auto!important;
-        }`;
-        if (!document.getElementById('liberator-style')) {
-            const style = document.createElement('style');
-            style.id = 'liberator-style';
-            style.textContent = css;
-            (document.head || document.documentElement).append(style);
-        }
+        const StyleDeclaration = `
+            * {
+                -webkit-user-select: text !important;
+                -moz-user-select: text !important;
+                -ms-user-select: text !important;
+                user-select: text !important;
+                -webkit-user-drag: auto !important;
+                -moz-user-drag: auto !important;
+                user-drag: auto !important;
+            }
+        `;
+
+        const StyleElement = document.createElement('style');
+        StyleElement.textContent = StyleDeclaration;
+        document.head.appendChild(StyleElement);
     }
 
     ProcessExistingElements() {
-        try {
-            const walker = document.createTreeWalker(
-                document.documentElement,
-                NodeFilter.SHOW_ELEMENT
-            );
-            let node;
-            while ((node = walker.nextNode())) {
-                this.RemoveEventListeners(node);
-            }
-        } catch (e) { console.debug('Liberator:', e); }
+        document.querySelectorAll('*').forEach(element => {
+            this.RemoveEventListeners(element);
+        });
     }
 
     RemoveEventListeners(element) {
-        if (!element || !element.addEventListener) return;
+        if (!element) return;
 
-        // 清除属性事件
-        ['oncontextmenu','onselectstart','oncopy','oncut','onpaste','ondrag','ondragstart']
-            .forEach(prop => { element[prop] = null; });
+        const RestrictedProperties = [
+            'oncontextmenu', 'onselectstart',
+            'oncopy', 'oncut', 'onpaste',
+            'ondrag', 'ondragstart'
+        ];
 
-        // 劫持addEventListener
-        const nativeAdd = EventTarget.prototype.addEventListener;
-        element.addEventListener = function(type, listener, options) {
-            if (['contextmenu','selectstart','copy','cut','paste','drag','dragstart']
-                .includes(type)) return;
-            nativeAdd.call(this, type, listener, options);
-        };
+        RestrictedProperties.forEach(property => {
+            element[property] = null;
+        });
     }
 
-    HijackEventListeners() {
-        const nativeAdd = EventTarget.prototype.addEventListener;
-        EventTarget.prototype.addEventListener = function(type, listener, options) {
-            if (['contextmenu','selectstart','copy','cut','paste','drag','dragstart']
-                .includes(type)) return;
-            nativeAdd.call(this, type, listener, options);
-        };
+    InitializedMutationHandler(mutationsList) {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        this.RemoveEventListeners(node);
+                        node.querySelectorAll('*').forEach(child => {
+                            this.RemoveEventListeners(child);
+                        });
+                    }
+                });
+            }
+        }
     }
 
     InitializeObserver() {
-        new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === 1) {
-                        this.RemoveEventListeners(node);
-                        this.ProcessExistingElements();
-                    }
-                });
-            });
-        }).observe(document, {
+        this.DomObserver = new MutationObserver(this.InitializedMutationHandler.bind(this));
+        this.DomObserver.observe(document.documentElement, {
             childList: true,
-            subtree: true
+            subtree: true,
+            attributes: false,
+            characterData: false
         });
     }
 }
 
-new EnhancedLiberator();
+new CopyRestrictionRemover();
