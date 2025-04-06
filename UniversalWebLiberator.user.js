@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         网页限制解除器
 // @description  深度解除网页复制内容限制 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能
-// @version      1.0.0
+// @version      1.0.1
 // @author       念柚
-// @namespace    https://github.com/MiPoNianYou/
+// @namespace    https://github.com/MiPoNianYou/UserScripts
 // @license      GPL-3.0
 // @match        *://*/*
 // @grant        none
