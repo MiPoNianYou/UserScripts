@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         网页限制解除器
 // @description  深度解除网页复制内容限制 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能
-// @version      1.0.1
+// @version      1.1.0
 // @author       念柚
 // @namespace    https://github.com/MiPoNianYou/UserScripts
 // @license      GPL-3.0
@@ -10,10 +10,11 @@
 // @run-at       document-start
 // ==/UserScript==
 
-class CopyRestrictionRemover {
+class EnhancedLiberator {
     constructor() {
         this.InitializeObserver();
         this.ExecuteCoreFeatures();
+        this.HijackEventListeners();
     }
 
     ExecuteCoreFeatures() {
@@ -25,96 +26,86 @@ class CopyRestrictionRemover {
     }
 
     BindGlobalEventHandlers() {
-        const EventConfigurations = [
-            ['contextmenu', this.HandleContextMenu],
-            ['selectstart', this.HandleSelection],
-            ['copy', this.HandleClipboard],
-            ['cut', this.HandleClipboard],
-            ['paste', this.HandleClipboard]
+        const events = [
+            ['contextmenu', e => e.stopImmediatePropagation()],
+            ['selectstart', e => e.stopImmediatePropagation()],
+            ['copy', e => e.stopImmediatePropagation()],
+            ['cut', e => e.stopImmediatePropagation()],
+            ['paste', e => e.stopImmediatePropagation()]
         ];
-
-        EventConfigurations.forEach(([eventType, handler]) => {
-            document.addEventListener(eventType, handler.bind(this), true);
+        events.forEach(([type, handler]) => {
+            document.addEventListener(type, handler, {capture: true, passive: true});
         });
-    }
-
-    HandleContextMenu(event) {
-        event.stopPropagation();
-        return true;
-    }
-
-    HandleSelection(event) {
-        event.stopPropagation();
-        return true;
-    }
-
-    HandleClipboard(event) {
-        event.stopPropagation();
-        return true;
     }
 
     InjectLiberationStyles() {
-        const StyleDeclaration = `
-            * {
-                -webkit-user-select: text !important;
-                -moz-user-select: text !important;
-                -ms-user-select: text !important;
-                user-select: text !important;
-                -webkit-user-drag: auto !important;
-                -moz-user-drag: auto !important;
-                user-drag: auto !important;
-            }
-        `;
-
-        const StyleElement = document.createElement('style');
-        StyleElement.textContent = StyleDeclaration;
-        document.head.appendChild(StyleElement);
-    }
-
-    ProcessExistingElements() {
-        document.querySelectorAll('*').forEach(element => {
-            this.RemoveEventListeners(element);
-        });
-    }
-
-    RemoveEventListeners(element) {
-        if (!element) return;
-
-        const RestrictedProperties = [
-            'oncontextmenu', 'onselectstart',
-            'oncopy', 'oncut', 'onpaste',
-            'ondrag', 'ondragstart'
-        ];
-
-        RestrictedProperties.forEach(property => {
-            element[property] = null;
-        });
-    }
-
-    InitializedMutationHandler(mutationsList) {
-        for (const mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        this.RemoveEventListeners(node);
-                        node.querySelectorAll('*').forEach(child => {
-                            this.RemoveEventListeners(child);
-                        });
-                    }
-                });
-            }
+        const css = `*,*::before,*::after{
+            -webkit-user-select:text!important;
+            user-select:text!important;
+            -webkit-user-drag:auto!important;
+            user-drag:auto!important;
+        }`;
+        if (!document.getElementById('liberator-style')) {
+            const style = document.createElement('style');
+            style.id = 'liberator-style';
+            style.textContent = css;
+            (document.head || document.documentElement).append(style);
         }
     }
 
+    ProcessExistingElements() {
+        try {
+            const walker = document.createTreeWalker(
+                document.documentElement,
+                NodeFilter.SHOW_ELEMENT
+            );
+            let node;
+            while ((node = walker.nextNode())) {
+                this.RemoveEventListeners(node);
+            }
+        } catch (e) { console.debug('Liberator:', e); }
+    }
+
+    RemoveEventListeners(element) {
+        if (!element || !element.addEventListener) return;
+
+        // 清除属性事件
+        ['oncontextmenu','onselectstart','oncopy','oncut','onpaste','ondrag','ondragstart']
+            .forEach(prop => { element[prop] = null; });
+
+        // 劫持addEventListener
+        const nativeAdd = EventTarget.prototype.addEventListener;
+        element.addEventListener = function(type, listener, options) {
+            if (['contextmenu','selectstart','copy','cut','paste','drag','dragstart']
+                .includes(type)) return;
+            nativeAdd.call(this, type, listener, options);
+        };
+    }
+
+    HijackEventListeners() {
+        const nativeAdd = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function(type, listener, options) {
+            if (['contextmenu','selectstart','copy','cut','paste','drag','dragstart']
+                .includes(type)) return;
+            nativeAdd.call(this, type, listener, options);
+        };
+    }
+
     InitializeObserver() {
-        this.DomObserver = new MutationObserver(this.InitializedMutationHandler.bind(this));
-        this.DomObserver.observe(document.documentElement, {
+        new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1) {
+                        this.RemoveEventListeners(node);
+                        this.ProcessExistingElements();
+                    }
+                });
+            });
+        }).observe(document, {
             childList: true,
-            subtree: true,
-            attributes: false,
-            characterData: false
+            subtree: true
         });
     }
 }
 
-new CopyRestrictionRemover();
+new EnhancedLiberator();
