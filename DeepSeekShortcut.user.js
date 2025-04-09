@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DeepSeek快捷键
 // @description  为DeepSeek提供快捷键支持（Mac & Windows）
-// @version      1.0.0
+// @version      1.1.0
 // @author       念柚
 // @namespace    https://github.com/MiPoNianYou/UserScripts
 // @license      GPL-3.0
@@ -12,6 +12,30 @@
 (function () {
   "use strict";
 
+  const CreateButtonFinder = (selector, text) => () =>
+    Array.from(document.querySelectorAll(selector)).find(
+      (btn) => btn.textContent?.includes(text) || btn.querySelector(text)
+    );
+
+  const FindRegenBtn = CreateButtonFinder(".ds-icon-button", "#重新生成");
+  const FindContinueBtn = CreateButtonFinder(".ds-button", "继续生成");
+  const FindDeepThinkBtn = CreateButtonFinder(".ds-button span", "深度思考");
+  const FindSearchBtn = CreateButtonFinder(".ds-button span", "联网搜索");
+  const FindUploadBtn = () => document.querySelector(".f02f0e25");
+  const FindNewChatBtn = () => document.querySelector("._217e214");
+  const FindToggleSidebarBtn = () =>
+    document
+      .querySelector(
+        ".ds-icon-button svg #打开边栏0730, .ds-icon-button svg #折叠边栏0730"
+      )
+      ?.closest(".ds-icon-button");
+  const FindChatMenuBtn = () => {
+    const SelectedChat = document.querySelector("._83421f9.b64fb9ae");
+    if (!SelectedChat) return null;
+    const ChatMenuBtn = SelectedChat.querySelector("._2090548");
+    if (ChatMenuBtn) ChatMenuBtn.click();
+  };
+
   const GetModifierKey = () => {
     const UA = navigator.userAgent;
     const IsMac = /Macintosh|MacIntel|MacPPC|Mac68K/i.test(UA);
@@ -21,8 +45,8 @@
       IsMac,
     };
   };
+    
   const ModifierKey = GetModifierKey();
-
   const HelpItems = [
     [`${ModifierKey.Character} + R`, "重新生成"],
     [`${ModifierKey.Character} + C`, "继续生成"],
@@ -32,46 +56,8 @@
     [`${ModifierKey.Character} + N`, "新建对话"],
     [`${ModifierKey.Character} + T`, "开关边栏"],
     [`${ModifierKey.Character} + I`, "对话菜单"],
-    [`${ModifierKey.Character} + /`, "脚本帮助"],
+    [`${ModifierKey.Character} + H`, "脚本帮助"],
   ];
-
-  const FindRegenBtn = () =>
-    Array.from(document.querySelectorAll(".ds-icon-button")).findLast((btn) =>
-      btn.querySelector("svg #重新生成")
-    );
-
-  const FindContinueBtn = () =>
-    Array.from(document.querySelectorAll(".ds-button")).find((btn) =>
-      btn.textContent.includes("继续生成")
-    );
-
-  const FindDeepThinkBtn = () =>
-    Array.from(document.querySelectorAll(".ds-button")).find((btn) =>
-      btn.querySelector("span.ad0c98fd")?.textContent.includes("深度思考")
-    );
-
-  const FindSearchBtn = () =>
-    Array.from(document.querySelectorAll(".ds-button")).find((btn) =>
-      btn.querySelector("span.ad0c98fd")?.textContent.includes("联网搜索")
-    );
-
-  const FindUploadBtn = () => document.querySelector(".f02f0e25");
-
-  const FindNewChatBtn = () => document.querySelector("._217e214");
-
-  const FindToggleSidebarBtn = () =>
-    document
-      .querySelector(
-        ".ds-icon-button svg #打开边栏0730, .ds-icon-button svg #折叠边栏0730"
-      )
-      ?.closest(".ds-icon-button");
-
-  const FindChatMenuBtn = () => {
-    const SelectedChat = document.querySelector("._83421f9.b64fb9ae");
-    if (!SelectedChat) return null;
-    const ChatMenuBtn = SelectedChat.querySelector("._2090548");
-    if (ChatMenuBtn) ChatMenuBtn.click();
-  };
 
   const CreateHelpOverlay = () => {
     const Overlay = document.createElement("div");
@@ -172,20 +158,6 @@
     Overlay.style.pointerEvents = IsVisible ? "none" : "auto";
   };
 
-  const HandleInputBlur = (ShouldBlur) => {
-    const Input = document.querySelector("textarea");
-    if (!Input) return;
-
-    if (ShouldBlur) {
-      Input.blur();
-      Input.dataset.originalReadonly = Input.readOnly;
-      Input.readOnly = true;
-    } else {
-      Input.readOnly = JSON.parse(Input.dataset.originalReadonly || "false");
-      delete Input.dataset.originalReadonly;
-    }
-  };
-
   const SafeClick = (FinderFunc) => {
     FinderFunc()?.click();
   };
@@ -203,35 +175,25 @@
     u: () => SafeClick(FindUploadBtn),
     n: () => SafeClick(FindNewChatBtn),
     t: () => SafeClick(FindToggleSidebarBtn),
-    i: (Event) => {
-      Event.preventDefault();
-      FindChatMenuBtn();
-    },
-    "/": (Event) => {
+    i: () => SafeClick(FindChatMenuBtn),
+    h: () => {
       InitHelpOverlay();
-      HandleInputBlur(true);
       ToggleHelpOverlay(HelpOverlay);
-      setTimeout(() => HandleInputBlur(false), 200);
     },
   };
 
-  const HandleKeyPress = (Event) => {
-    const ModifierPressed = ModifierKey.IsMac ? Event.ctrlKey : Event.altKey;
-    if (!ModifierPressed) return;
+  const CreateKeyHandler = () => {
+    const IsModifierPressed = (Event) =>
+      ModifierKey.IsMac ? Event.ctrlKey : Event.altKey;
 
-    const Key = Event.key.toLowerCase();
-
-    if (Key === "/") {
-      Event.preventDefault();
-      KeyActions[Key]?.(Event);
-      return;
-    }
-
-    if (Key in KeyActions) {
-      Event.preventDefault();
-      KeyActions[Key]?.(Event);
-    }
+    return (Event) => {
+      if (!IsModifierPressed(Event)) return;
+      const Key = Event.key.toLowerCase();
+      const Action = KeyActions[Key];
+      Action?.(Event) && Event.preventDefault();
+    };
   };
 
-  window.addEventListener("keydown", HandleKeyPress);
+  const KeyHandler = CreateKeyHandler();
+  window.addEventListener("keydown", KeyHandler);
 })();
