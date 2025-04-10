@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name         DeepSeek快捷键
 // @description  为DeepSeek提供快捷键支持（Mac & Windows）
-// @version      1.1.0
+// @version      1.1.1
+// @icon         https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutIcon.svg
 // @author       念柚
 // @namespace    https://github.com/MiPoNianYou/UserScripts
 // @license      GPL-3.0
@@ -31,21 +32,18 @@
       ?.closest(".ds-icon-button");
   const FindChatMenuBtn = () => {
     const SelectedChat = document.querySelector("._83421f9.b64fb9ae");
-    if (!SelectedChat) return null;
-    const ChatMenuBtn = SelectedChat.querySelector("._2090548");
-    if (ChatMenuBtn) ChatMenuBtn.click();
+    return SelectedChat?.querySelector("._2090548");
   };
 
   const GetModifierKey = () => {
     const UA = navigator.userAgent;
     const IsMac = /Macintosh|MacIntel|MacPPC|Mac68K/i.test(UA);
     return {
-      Key: IsMac ? "ctrl" : "alt",
       Character: IsMac ? "Control" : "Alt",
       IsMac,
     };
   };
-    
+
   const ModifierKey = GetModifierKey();
   const HelpItems = [
     [`${ModifierKey.Character} + R`, "重新生成"],
@@ -66,25 +64,25 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.95);
-      background: rgba(28, 28, 30, 0.95);
+      background: rgba(28, 28, 30, 0.92);
       border: 0.5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 13px;
+      border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(20px) saturate(180%);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(24px) saturate(150%);
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.28, 0.55, 0.385, 1.1);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       z-index: 9999;
       pointer-events: none;
       min-width: 260px;
       color: #ffffff;
+      font: 500 14px/-apple-system, sans-serif;
     `;
 
     const Title = document.createElement("h3");
-    Title.textContent = "快捷键指南";
+    Title.textContent = "快捷按键指北";
     Title.style.cssText = `
       margin: 0 0 16px 0;
-      font: 500 16px/-apple-system, sans-serif;
       color: rgba(255, 255, 255, 0.85);
       text-align: center;
       width: 100%;
@@ -105,7 +103,6 @@
       const KeyEl = document.createElement("span");
       KeyEl.textContent = key;
       KeyEl.style.cssText = `
-        font: 13px/.system-ui, -apple-system, sans-serif;
         color: rgba(255, 255, 255, 0.9);
         background: rgba(120, 120, 128, 0.2);
         padding: 5px 10px;
@@ -119,7 +116,6 @@
       const DescEl = document.createElement("span");
       DescEl.textContent = desc;
       DescEl.style.cssText = `
-        font: 13px/-apple-system, sans-serif;
         color: rgba(255, 255, 255, 0.75);
         margin-right: 12px;
         flex: 1;
@@ -135,9 +131,8 @@
     Warning.style.cssText = `
       margin-top: 20px;
       padding: 10px;
-      font: 11px/-apple-system, sans-serif;
-      color: #ff6961;
-      background: rgba(255, 105, 97, 0.1);
+      color: #ff6961cc;
+      background: rgba(255, 105, 97, 0.08);
       border-radius: 8px;
       line-height: 1.4;
       text-align: center;
@@ -158,13 +153,13 @@
     Overlay.style.pointerEvents = IsVisible ? "none" : "auto";
   };
 
-  const SafeClick = (FinderFunc) => {
-    FinderFunc()?.click();
-  };
-
   let HelpOverlay = null;
   const InitHelpOverlay = () => {
     if (!HelpOverlay) HelpOverlay = CreateHelpOverlay();
+  };
+
+  const SafeClick = (FinderFunc) => {
+    FinderFunc()?.click();
   };
 
   const KeyActions = {
