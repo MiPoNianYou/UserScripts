@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DeepSeek快捷键
 // @description  为DeepSeek提供快捷键支持（Mac & Windows）
-// @version      1.1.1
+// @version      1.1.2
 // @icon         https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutIcon.svg
 // @author       念柚
 // @namespace    https://github.com/MiPoNianYou/UserScripts
@@ -14,8 +14,8 @@
   "use strict";
 
   const CreateButtonFinder = (selector, text) => () =>
-    Array.from(document.querySelectorAll(selector)).find(
-      (btn) => btn.textContent?.includes(text) || btn.querySelector(text)
+    Array.from(document.querySelectorAll(selector)).find((btn) =>
+      btn.textContent?.trim().includes(text)
     );
 
   const FindRegenBtn = CreateButtonFinder(".ds-icon-button", "#重新生成");
@@ -64,27 +64,32 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.95);
-      background: rgba(28, 28, 30, 0.92);
-      border: 0.5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-      backdrop-filter: blur(24px) saturate(150%);
+      background: rgba(28, 28, 30, 0.9);
+      border: 0.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20px) saturate(180%);
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 9999;
       pointer-events: none;
-      min-width: 260px;
-      color: #ffffff;
-      font: 500 14px/-apple-system, sans-serif;
+      min-width: 280px;
+      color: rgba(255, 255, 255, 0.95);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
     `;
 
     const Title = document.createElement("h3");
     Title.textContent = "快捷按键指北";
     Title.style.cssText = `
-      margin: 0 0 16px 0;
-      color: rgba(255, 255, 255, 0.85);
+      margin: 0 0 20px 0;
+      color: rgba(255, 255, 255, 0.9);
       text-align: center;
+      font-size: 16px;
+      font-weight: 600;
       width: 100%;
     `;
 
@@ -95,30 +100,38 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
-        padding: 3px 0;
-        border-bottom: 0.5px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 10px;
+        padding: 5px 0;
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
       `;
+      if (HelpItems.indexOf([key, desc]) === HelpItems.length - 1) {
+        Row.style.borderBottom = "none";
+        Row.style.marginBottom = "0";
+      }
 
       const KeyEl = document.createElement("span");
       KeyEl.textContent = key;
       KeyEl.style.cssText = `
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(120, 120, 128, 0.2);
-        padding: 5px 10px;
-        border-radius: 6px;
-        letter-spacing: -0.2px;
-        min-width: 88px;
+        color: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 8px;
+        border-radius: 5px;
+        border: 0.5px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        font-family: inherit;
+        font-size: 13px;
+        min-width: 90px;
         text-align: center;
         flex-shrink: 0;
+        margin-left: 16px;
       `;
 
       const DescEl = document.createElement("span");
       DescEl.textContent = desc;
       DescEl.style.cssText = `
-        color: rgba(255, 255, 255, 0.75);
-        margin-right: 12px;
-        flex: 1;
+        color: rgba(255, 255, 255, 0.8);
+        flex-grow: 1;
+        padding-right: 10px;
       `;
 
       Row.append(DescEl, KeyEl);
@@ -129,14 +142,15 @@
     Warning.textContent =
       "⚠️ 本脚本通过检测浏览器UA自动切换快捷键 使用修改UA的插件可能导致功能异常";
     Warning.style.cssText = `
-      margin-top: 20px;
-      padding: 10px;
-      color: #ff6961cc;
-      background: rgba(255, 105, 97, 0.08);
+      margin-top: 24px;
+      padding: 12px;
+      color: rgba(255, 119, 119, 0.9);
+      background: rgba(255, 119, 119, 0.1);
       border-radius: 8px;
-      line-height: 1.4;
+      line-height: 1.5;
       text-align: center;
-      border: 0.5px solid rgba(255, 105, 97, 0.2);
+      font-size: 12px;
+      border: 0.5px solid rgba(255, 119, 119, 0.2);
     `;
 
     Overlay.append(Title, List, Warning);
@@ -145,7 +159,7 @@
   };
 
   const ToggleHelpOverlay = (Overlay) => {
-    const IsVisible = Overlay.style.opacity === "1";
+    const IsVisible = parseFloat(Overlay.style.opacity || 0) > 0;
     Overlay.style.opacity = IsVisible ? "0" : "1";
     Overlay.style.transform = `translate(-50%, -50%) scale(${
       IsVisible ? 0.95 : 1
@@ -155,7 +169,9 @@
 
   let HelpOverlay = null;
   const InitHelpOverlay = () => {
-    if (!HelpOverlay) HelpOverlay = CreateHelpOverlay();
+    if (!HelpOverlay) {
+      HelpOverlay = CreateHelpOverlay();
+    }
   };
 
   const SafeClick = (FinderFunc) => {
@@ -182,6 +198,11 @@
       ModifierKey.IsMac ? Event.ctrlKey : Event.altKey;
 
     return (Event) => {
+      if (Event.key === "Escape" && HelpOverlay?.style.opacity === "1") {
+        ToggleHelpOverlay(HelpOverlay);
+        return;
+      }
+
       if (!IsModifierPressed(Event)) return;
       const Key = Event.key.toLowerCase();
       const Action = KeyActions[Key];
@@ -190,5 +211,5 @@
   };
 
   const KeyHandler = CreateKeyHandler();
-  window.addEventListener("keydown", KeyHandler);
+  window.addEventListener("keydown", KeyHandler, true);
 })();
