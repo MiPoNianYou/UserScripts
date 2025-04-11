@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DeepSeek快捷键
 // @description  为DeepSeek提供快捷键支持（Mac & Windows）
-// @version      1.1.2
+// @version      1.1.3
 // @icon         https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutIcon.svg
 // @author       念柚
 // @namespace    https://github.com/MiPoNianYou/UserScripts
@@ -14,8 +14,8 @@
   "use strict";
 
   const CreateButtonFinder = (selector, text) => () =>
-    Array.from(document.querySelectorAll(selector)).find((btn) =>
-      btn.textContent?.trim().includes(text)
+    Array.from(document.querySelectorAll(selector)).find(
+      (btn) => btn.textContent?.includes(text) || btn.querySelector(text)
     );
 
   const FindRegenBtn = CreateButtonFinder(".ds-icon-button", "#重新生成");
