@@ -12,6 +12,7 @@
 | 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📄 更新日志 |
 | :-: | :-: | :-: | :-: |
 | 网页限制解除器 <Br> Universal Web Liberator | 深度解除网页复制内容限制 <Br> 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) | [**点击查看**](https://greasyfork.org/scripts/532010/versions?show_all_versions=1) |
+| 悬浮显示密码 <Br> Hover Password | 鼠标悬浮在密码输入框上时 临时将密码显示为明文 鼠标移出后恢复为隐藏状态 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) | [**点击查看**](https://greasyfork.org/scripts/532524/versions?show_all_versions=1) |
 | YouTube评论翻译 <Br> YouTube Translation | 自动翻译并展开YouTube评论 | [**Greasy Fork**](https://greasyfork.org/scripts/532018) | [**点击查看**](https://greasyfork.org/scripts/532018/versions?show_all_versions=1) |
 | DeepSeek快捷键 <Br> DeepSeek Shortcut | 为DeepSeek提供快捷键支持（Mac & Windows） | [**Greasy Fork**](https://greasyfork.org/scripts/532221) | [**点击查看**](https://greasyfork.org/scripts/532221/versions?show_all_versions=1) |
 
@@ -20,10 +21,13 @@
 ## 📷 功能展示
 
 ### YouTube评论翻译
-![YouTubeTranslationFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/YouTubeTranslationFeature.png?raw=true "YouTubeTranslationFeature")
+![YouTubeTranslationFeature](https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Images/YouTubeTranslationFeature.png "YouTubeTranslationFeature")
 
 ### DeepSeek快捷键
-![DeepSeekShortcutFeature](https://github.com/MiPoNianYou/UserScripts/blob/e9e0f178ccc8e55964e2c9cb6ecf6b0509a2e194/Images/DeepSeekShortcutFeature.png?raw=true "DeepSeekShortcutFeature")
+![DeepSeekShortcutFeature](https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Images/DeepSeekShortcutFeature.png "DeepSeekShortcutFeature")
+
+### 悬浮显示密码
+![HoverPasswordFeature](https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Images/HoverPasswordFeature.png "HoverPasswordFeature")
 
 ---
 
