@@ -20,14 +20,23 @@
 
 ## 📷 功能展示
 
-### 悬浮显示密码
+<details>
+<summary>悬浮显示密码</summary>
+
 ![HoverPasswordFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/HoverPasswordFeature.png?raw=true "HoverPasswordFeature")
+</details>
 
-### DeepSeek快捷键
+<details>
+<summary>DeepSeek快捷键</summary>
+
 ![DeepSeekShortcutFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DeepSeekShortcutFeature.png?raw=true "DeepSeekShortcutFeature")
+</details>
 
-### DuckDuckGo优化
+<details>
+<summary>DuckDuckGo优化</summary>
+
 ![DuckDuckGoOptimizationFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DuckDuckGoOptimizationFeature.png?raw=true "DuckDuckGoOptimizationFeature")
+</details>
 
 ---
 
