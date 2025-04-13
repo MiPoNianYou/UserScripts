@@ -1,13 +1,18 @@
 // ==UserScript==
-// @name         DeepSeek快捷键
-// @description  为DeepSeek提供快捷键支持（Mac & Windows）
-// @version      1.1.3
-// @icon         https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutIcon.svg
-// @author       念柚
-// @namespace    https://github.com/MiPoNianYou/UserScripts
-// @license      GPL-3.0
-// @match        https://chat.deepseek.com/*
-// @grant        none
+// @name               DeepSeek ShortCuts
+// @name:zh-CN         DeepSeek快捷键
+// @name:zh-TW         DeepSeek快捷鍵
+// @description        Keyboard Shortcuts For DeepSeek (Mac & Windows)
+// @description:zh-CN  为DeepSeek提供快捷键支持（Mac & Windows）
+// @description:zh-TW  為DeepSeek提供快捷鍵支持（Mac & Windows）
+// @version            1.2.0
+// @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutIcon.svg
+// @author             念柚
+// @namespace          https://github.com/MiPoNianYou/UserScripts
+// @supportURL         https://github.com/MiPoNianYou/UserScripts/issues
+// @license            GPL-3.0
+// @match              https://chat.deepseek.com/*
+// @grant              none
 // ==/UserScript==
 
 (function () {
@@ -37,24 +42,25 @@
 
   const GetModifierKey = () => {
     const UA = navigator.userAgent;
-    const IsMac = /Macintosh|MacIntel|MacPPC|Mac68K/i.test(UA);
+    const IsMac = /Macintosh|Mac OS X/i.test(UA);
     return {
       Character: IsMac ? "Control" : "Alt",
+      Property: IsMac ? "ctrlKey" : "altKey",
       IsMac,
     };
   };
 
   const ModifierKey = GetModifierKey();
   const HelpItems = [
-    [`${ModifierKey.Character} + R`, "重新生成"],
-    [`${ModifierKey.Character} + C`, "继续生成"],
-    [`${ModifierKey.Character} + D`, "深度思考"],
-    [`${ModifierKey.Character} + S`, "联网搜索"],
-    [`${ModifierKey.Character} + U`, "上传文件"],
-    [`${ModifierKey.Character} + N`, "新建对话"],
-    [`${ModifierKey.Character} + T`, "开关边栏"],
-    [`${ModifierKey.Character} + I`, "对话菜单"],
-    [`${ModifierKey.Character} + H`, "脚本帮助"],
+    [`${ModifierKey.Character} + R`, "重新生成回答"],
+    [`${ModifierKey.Character} + C`, "继续生成回答"],
+    [`${ModifierKey.Character} + D`, "深度思考模式"],
+    [`${ModifierKey.Character} + S`, "联网搜索模式"],
+    [`${ModifierKey.Character} + U`, "上传文件文件"],
+    [`${ModifierKey.Character} + N`, "新建对话窗口"],
+    [`${ModifierKey.Character} + T`, "切换开关边栏"],
+    [`${ModifierKey.Character} + I`, "当前对话菜单"],
+    [`${ModifierKey.Character} + H`, "快捷按键帮助"],
   ];
 
   const CreateHelpOverlay = () => {
@@ -64,33 +70,38 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.95);
-      background: rgba(28, 28, 30, 0.9);
-      border: 0.5px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(20px) saturate(180%);
-      opacity: 0;
-      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 9999;
       pointer-events: none;
+
       min-width: 280px;
+      padding: 24px;
+      border: 0.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+
+      background: rgba(28, 28, 30, 0.9);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20px) saturate(180%);
+
       color: rgba(255, 255, 255, 0.95);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
       font-size: 14px;
       font-weight: 500;
       line-height: 1.5;
+
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     `;
 
     const Title = document.createElement("h3");
     Title.textContent = "快捷按键指北";
     Title.style.cssText = `
       margin: 0 0 20px 0;
+      width: 100%;
+
       color: rgba(255, 255, 255, 0.9);
-      text-align: center;
       font-size: 16px;
       font-weight: 600;
-      width: 100%;
+      text-align: center;
     `;
 
     const List = document.createElement("div");
@@ -102,6 +113,7 @@
         align-items: center;
         margin-bottom: 10px;
         padding: 5px 0;
+
         border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
       `;
       if (HelpItems.indexOf([key, desc]) === HelpItems.length - 1) {
@@ -112,26 +124,29 @@
       const KeyEl = document.createElement("span");
       KeyEl.textContent = key;
       KeyEl.style.cssText = `
-        color: rgba(255, 255, 255, 0.95);
-        background: rgba(255, 255, 255, 0.1);
+        min-width: 90px;
         padding: 4px 8px;
-        border-radius: 5px;
+        margin-left: 16px;
+
+        background: rgba(255, 255, 255, 0.1);
         border: 0.5px solid rgba(255, 255, 255, 0.15);
+        border-radius: 5px;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+        color: rgba(255, 255, 255, 0.95);
         font-family: inherit;
         font-size: 13px;
-        min-width: 90px;
         text-align: center;
+
         flex-shrink: 0;
-        margin-left: 16px;
       `;
 
       const DescEl = document.createElement("span");
       DescEl.textContent = desc;
       DescEl.style.cssText = `
-        color: rgba(255, 255, 255, 0.8);
         flex-grow: 1;
         padding-right: 10px;
+        color: rgba(255, 255, 255, 0.8);
       `;
 
       Row.append(DescEl, KeyEl);
@@ -139,18 +154,19 @@
     });
 
     const Warning = document.createElement("div");
-    Warning.textContent =
-      "⚠️ 本脚本通过检测浏览器UA自动切换快捷键 使用修改UA的插件可能导致功能异常";
+    Warning.textContent = "⚠️ 脚本依UA自动适配快捷键 篡改UA或致功能异常";
     Warning.style.cssText = `
       margin-top: 24px;
       padding: 12px;
-      color: rgba(255, 119, 119, 0.9);
+
       background: rgba(255, 119, 119, 0.1);
+      border: 0.5px solid rgba(255, 119, 119, 0.2);
       border-radius: 8px;
+
+      color: rgba(255, 119, 119, 0.9);
+      font-size: 12px;
       line-height: 1.5;
       text-align: center;
-      font-size: 12px;
-      border: 0.5px solid rgba(255, 119, 119, 0.2);
     `;
 
     Overlay.append(Title, List, Warning);
@@ -194,8 +210,7 @@
   };
 
   const CreateKeyHandler = () => {
-    const IsModifierPressed = (Event) =>
-      ModifierKey.IsMac ? Event.ctrlKey : Event.altKey;
+    const IsModifierPressed = (Event) => Event[ModifierKey.Property];
 
     return (Event) => {
       if (Event.key === "Escape" && HelpOverlay?.style.opacity === "1") {
