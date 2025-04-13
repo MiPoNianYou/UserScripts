@@ -29,7 +29,7 @@
 <details>
 <summary>DeepSeek快捷键</summary>
 
-![DeepSeekShortcutFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DeepSeekShortcutFeature.png?raw=true "DeepSeekShortcutFeature")
+![DeepSeekShortcutsFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DeepSeekShortcutsFeature.png?raw=true "DeepSeekShortcutsFeature")
 </details>
 
 <details>
