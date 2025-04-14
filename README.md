@@ -11,29 +11,32 @@
 
 | 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 |
 | :-: | :-: | :-: |
-| 网页限制解除器 <Br> Universal Web Liberator | 深度解除网页复制内容限制 <Br> 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) |
-| 悬浮显示密码 <Br> Hover Password | 鼠标悬浮在密码输入框上时 <Br> 将密码显示为明文 鼠标移出后恢复 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) |
-| DeepSeek快捷键 <Br> DeepSeek Shortcut | 为DeepSeek提供快捷键支持（Mac & Windows） | [**Greasy Fork**](https://greasyfork.org/scripts/532221) |
-| DuckDuckGo优化 <Br> DuckDuckGoOptimization | 便捷返回顶部 / 跨引擎一键搜 | [**Greasy Fork**](https://greasyfork.org/scripts/532614) |
+| 网页限制解除器 | 深度解除网页复制内容限制 <Br> 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) |
+| 密码显示助手 | 通过鼠标悬浮或双击来显示密码框内容 <BR> 可通过脚本菜单切换触发方式 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) |
+| DeepSeek快捷键 | 为DeepSeek提供快捷键支持（Mac & Windows） | [**Greasy Fork**](https://greasyfork.org/scripts/532221) |
+| DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [**Greasy Fork**](https://greasyfork.org/scripts/532614) |
 
 ---
 
 ## 📷 功能展示
 
+**密码显示助手**
 <details>
-<summary>悬浮显示密码</summary>
+<summary>点击查看</summary>
 
-![HoverPasswordFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/HoverPasswordFeature.png?raw=true "HoverPasswordFeature")
+![PasswordRevealerFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/PasswordRevealerFeature.png?raw=true "PasswordRevealerFeature")
 </details>
 
+**DeepSeek快捷键**
 <details>
-<summary>DeepSeek快捷键</summary>
+<summary>点击查看</summary>
 
 ![DeepSeekShortcutsFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DeepSeekShortcutsFeature.png?raw=true "DeepSeekShortcutsFeature")
 </details>
 
+**DuckDuckGo优化**
 <details>
-<summary>DuckDuckGo优化</summary>
+<summary>点击查看</summary>
 
 ![DuckDuckGoOptimizationFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DuckDuckGoOptimizationFeature.png?raw=true "DuckDuckGoOptimizationFeature")
 </details>
