@@ -6,12 +6,12 @@
 
 ---
 
-## 💩 乐色清单
-> 详细功能介绍/更新日志请前往Greasy Fork查看
+## 💩 乐色脚本清单
+> 详细功能介绍请前往Greasy Fork查看
 
-| 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 |
-| :-: | :-: | :-: |
-| 网页限制解除器 | 深度解除网页复制内容限制 <Br> 智能恢复右键菜单/文本选择/剪贴板操作/拖拽功能 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) |
+| 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📝 更新日志 |
+| :-: | :-: | :-: | :-: |
+| 网页枷锁破除 | 解除网页右键/选择/复制及拖拽限制 恢复自由交互体验 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) | [**V1.1.2**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
 | 密码显示助手 | 通过鼠标悬浮或双击来显示密码框内容 <BR> 可通过脚本菜单切换触发方式 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) |
 | DeepSeek快捷键 | 为DeepSeek提供快捷键支持（Mac & Windows） | [**Greasy Fork**](https://greasyfork.org/scripts/532221) |
 | DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [**Greasy Fork**](https://greasyfork.org/scripts/532614) |
@@ -22,21 +22,21 @@
 
 **密码显示助手**
 <details>
-<summary>点击查看</summary>
+<summary>点击展开/收合</summary>
 
 ![PasswordRevealerFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/PasswordRevealerFeature.png?raw=true "PasswordRevealerFeature")
 </details>
 
 **DeepSeek快捷键**
 <details>
-<summary>点击查看</summary>
+<summary>点击展开/收合</summary>
 
 ![DeepSeekShortcutsFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DeepSeekShortcutsFeature.png?raw=true "DeepSeekShortcutsFeature")
 </details>
 
 **DuckDuckGo优化**
 <details>
-<summary>点击查看</summary>
+<summary>点击展开/收合</summary>
 
 ![DuckDuckGoOptimizationFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DuckDuckGoOptimizationFeature.png?raw=true "DuckDuckGoOptimizationFeature")
 </details>
