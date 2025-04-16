@@ -2,10 +2,10 @@
 // @name               Password Revealer
 // @name:zh-CN         密码显示助手
 // @name:zh-TW         密碼顯示助手
-// @description        Reveal Passwords By Hovering Or DoubleClicking The Input Field Switch Modes Via The Tampermonkey Menu
-// @description:zh-CN  通过鼠标悬浮或双击来显示密码框内容 可通过脚本菜单切换触发方式
-// @description:zh-TW  透過滑鼠懸浮或雙擊來顯示密碼框內容 可透過腳本選單切換觸發方式
-// @version            1.1.0
+// @description        Reveal Passwords By Hovering/DoubleClicking/Always Show Select Mode Via The Tampermonkey Menu
+// @description:zh-CN  通过鼠标悬浮/双击/始终显示来显示密码框内容 可通过脚本菜单选择触发方式
+// @description:zh-TW  透過滑鼠懸浮/雙擊/始終顯示來顯示密碼框內容 可透過腳本選單選擇觸發方式
+// @version            1.2.0
 // @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/PasswordRevealerIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
@@ -15,6 +15,7 @@
 // @grant              GM_getValue
 // @grant              GM_setValue
 // @grant              GM_registerMenuCommand
+// @grant              GM_unregisterMenuCommand
 // @grant              GM_addStyle
 // ==/UserScript==
 
@@ -24,38 +25,81 @@
   const ModeKey = "PasswordDisplayMode";
   const ModeHover = "Hover";
   const ModeDBClick = "DoubleClick";
-  const NotificationId = "password-revealer-notification";
+  const ModeAlwaysShow = "AlwaysShow";
+  const NotificationId = "PasswordRevealerNotification";
   const NotificationTimeout = 2000;
   const AnimationDuration = 300;
   const ScriptIconUrl =
     "https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/PasswordRevealerIcon.svg";
+  const ProcessedAttribute = "DataPasswordRevealerProcessed";
 
-  const ScriptTitles = {
-    "en-US": "Password Revealer",
-    "zh-CN": "密码显示助手",
-    "zh-TW": "密碼顯示助手",
-  };
-
-  const MenuCommandTexts = {
-    "en-US": "Toggle Password Display Mode",
-    "zh-CN": "切换密码显示模式",
-    "zh-TW": "切換密碼顯示模式",
-  };
-
-  const AlertMessages = {
+  const Localization = {
     "en-US": {
-      [ModeHover]: "Mode Switched To 「Hover」",
-      [ModeDBClick]: "Mode Switched To 「Double Click」",
+      ScriptTitle: "Password Revealer",
+      MenuCmdSetHover: "「Hover」Mode",
+      MenuCmdSetDBClick: "「Double Click」Mode",
+      MenuCmdSetAlwaysShow: "「Always Show」Mode",
+      AlertMessages: {
+        [ModeHover]: "Mode Switched To 「Hover」",
+        [ModeDBClick]: "Mode Switched To 「Double Click」",
+        [ModeAlwaysShow]: "Mode Switched To 「Always Show」",
+      },
     },
     "zh-CN": {
-      [ModeHover]: "模式已切换为：悬浮显示",
-      [ModeDBClick]: "模式已切换为：双击切换",
+      ScriptTitle: "密码显示助手",
+      MenuCmdSetHover: "「悬浮显示」模式",
+      MenuCmdSetDBClick: "「双击切换」模式",
+      MenuCmdSetAlwaysShow: "「始终显示」模式",
+      AlertMessages: {
+        [ModeHover]: "模式已切换为「悬浮显示」",
+        [ModeDBClick]: "模式已切换为「双击切换」",
+        [ModeAlwaysShow]: "模式已切换为「始终显示」",
+      },
     },
     "zh-TW": {
-      [ModeHover]: "模式已切換為：懸浮顯示",
-      [ModeDBClick]: "模式已切換為：雙擊切換",
+      ScriptTitle: "密碼顯示助手",
+      MenuCmdSetHover: "「懸浮顯示」模式",
+      MenuCmdSetDBClick: "「雙擊切換」模式",
+      MenuCmdSetAlwaysShow: "「始終顯示」模式",
+      AlertMessages: {
+        [ModeHover]: "模式已切換為「懸浮顯示」",
+        [ModeDBClick]: "模式已切換為「雙擊切換」",
+        [ModeAlwaysShow]: "模式已切換為「始終顯示」",
+      },
     },
   };
+
+  const ModeMenuTextKeys = {
+    [ModeHover]: "MenuCmdSetHover",
+    [ModeDBClick]: "MenuCmdSetDBClick",
+    [ModeAlwaysShow]: "MenuCmdSetAlwaysShow",
+  };
+
+  let RegisteredMenuCommandIds = [];
+
+  function GetLanguageKey() {
+    const Lang = navigator.language;
+    if (Lang.startsWith("zh")) {
+      return Lang === "zh-TW" || Lang === "zh-HK" || Lang === "zh-Hant"
+        ? "zh-TW"
+        : "zh-CN";
+    }
+    return "en-US";
+  }
+
+  function GetLocalizedText(Key, SubKey = null, FallbackLang = "en-US") {
+    const LangKey = GetLanguageKey();
+    const PrimaryLangData = Localization[LangKey] || Localization[FallbackLang];
+    const FallbackLangData = Localization[FallbackLang];
+
+    let Value;
+    if (SubKey && Key === "AlertMessages") {
+      Value = PrimaryLangData[Key]?.[SubKey] ?? FallbackLangData[Key]?.[SubKey];
+    } else {
+      Value = PrimaryLangData[Key] ?? FallbackLangData[Key];
+    }
+    return Value ?? (SubKey ? `${Key}.${SubKey}?` : `${Key}?`);
+  }
 
   function InjectNotificationStyles() {
     GM_addStyle(`
@@ -143,13 +187,10 @@
 
     const NotificationElement = document.createElement("div");
     NotificationElement.id = NotificationId;
-
-    const LocalizedTitle = GetLocalizedScriptTitle();
-
     NotificationElement.innerHTML = `
       <img src="${ScriptIconUrl}" alt="Icon" class="pr-icon">
       <div class="pr-content">
-        <div class="pr-title">${LocalizedTitle}</div>
+        <div class="pr-title">${GetLocalizedText("ScriptTitle")}</div>
         <div class="pr-message">${Message}</div>
       </div>
     `;
@@ -157,9 +198,7 @@
     document.body.appendChild(NotificationElement);
 
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        NotificationElement.classList.add("visible");
-      });
+      NotificationElement.classList.add("visible");
     });
 
     NotificationTimer = setTimeout(() => {
@@ -173,41 +212,6 @@
       }, AnimationDuration);
     }, NotificationTimeout);
   }
-
-  function GetLanguageKey() {
-    const Lang = navigator.language;
-    if (Lang.startsWith("zh")) {
-      if (Lang === "zh-TW" || Lang === "zh-HK" || Lang === "zh-Hant") {
-        return "zh-TW";
-      } else {
-        return "zh-CN";
-      }
-    } else {
-      if (Lang.startsWith("en")) {
-        return "en-US";
-      }
-      return "en-US";
-    }
-  }
-
-  function GetLocalizedScriptTitle() {
-    const LangKey = GetLanguageKey();
-    return ScriptTitles[LangKey] || ScriptTitles["en-US"];
-  }
-
-  function GetLocalizedMenuCommandText() {
-    const LangKey = GetLanguageKey();
-    return MenuCommandTexts[LangKey] || MenuCommandTexts["en-US"];
-  }
-
-  function GetLocalizedAlertMessage(Mode) {
-    const LangKey = GetLanguageKey();
-    const LangMessages = AlertMessages[LangKey] || AlertMessages["en-US"];
-    return LangMessages[Mode] || `Mode: ${Mode}`;
-  }
-
-  let CurrentMode = GM_getValue(ModeKey, ModeHover);
-  const LocalizedCommandText = GetLocalizedMenuCommandText();
 
   function ShowPasswordOnHover() {
     this.type = "text";
@@ -243,29 +247,85 @@
   }
 
   function ProcessPasswordInput(Input, Mode) {
+    if (!(Input instanceof HTMLInputElement)) return;
+
     RemoveHoverBehavior(Input);
     RemoveDoubleClickBehavior(Input);
 
-    if (Mode === ModeHover) {
-      ApplyHoverBehavior(Input);
-    } else if (Mode === ModeDBClick) {
-      ApplyDoubleClickBehavior(Input);
+    switch (Mode) {
+      case ModeHover:
+        Input.type = "password";
+        ApplyHoverBehavior(Input);
+        break;
+      case ModeDBClick:
+        Input.type = "password";
+        ApplyDoubleClickBehavior(Input);
+        break;
+      case ModeAlwaysShow:
+        Input.type = "text";
+        break;
+      default:
+        Input.type = "password";
+        ApplyHoverBehavior(Input);
+        Mode = ModeHover;
     }
-    Input.dataset.passwordProcessed = Mode;
+
+    Input.setAttribute(ProcessedAttribute, Mode);
   }
 
-  function ToggleMode() {
-    const OldMode = CurrentMode;
-    const NewMode = OldMode === ModeHover ? ModeDBClick : ModeHover;
-    GM_setValue(ModeKey, NewMode);
-    CurrentMode = NewMode;
+  function SetMode(NewMode) {
+    if (
+      NewMode === CurrentMode ||
+      ![ModeHover, ModeDBClick, ModeAlwaysShow].includes(NewMode)
+    ) {
+      return;
+    }
 
-    const AlertMessage = GetLocalizedAlertMessage(NewMode);
+    CurrentMode = NewMode;
+    GM_setValue(ModeKey, CurrentMode);
+
+    const AlertMessage = GetLocalizedText("AlertMessages", CurrentMode);
     ShowNotification(AlertMessage);
 
-    document.querySelectorAll('input[type="password"]').forEach((Input) => {
-      ProcessPasswordInput(Input, NewMode);
+    const AllPasswordInputs = document.querySelectorAll(
+      `input[type="password"], input[type="text"][${ProcessedAttribute}]`
+    );
+    AllPasswordInputs.forEach((Input) => {
+      if (Input.hasAttribute(ProcessedAttribute) || Input.type === "password") {
+        ProcessPasswordInput(Input, CurrentMode);
+      }
     });
+
+    RegisterModeMenuCommands();
+  }
+
+  function RegisterModeMenuCommands() {
+    RegisteredMenuCommandIds.forEach((Id) => {
+      try {
+        GM_unregisterMenuCommand(Id);
+      } catch (E) {}
+    });
+    RegisteredMenuCommandIds = [];
+
+    const ModesToRegister = [ModeHover, ModeDBClick, ModeAlwaysShow];
+
+    ModesToRegister.forEach((Mode) => {
+      const MenuKey = ModeMenuTextKeys[Mode];
+      const BaseText = GetLocalizedText(MenuKey);
+      const CommandText = BaseText + (Mode === CurrentMode ? " ✅" : "");
+
+      const CommandId = GM_registerMenuCommand(CommandText, () =>
+        SetMode(Mode)
+      );
+      RegisteredMenuCommandIds.push(CommandId);
+    });
+  }
+
+  let CurrentMode = GM_getValue(ModeKey, ModeHover);
+
+  if (![ModeHover, ModeDBClick, ModeAlwaysShow].includes(CurrentMode)) {
+    CurrentMode = ModeHover;
+    GM_setValue(ModeKey, CurrentMode);
   }
 
   InjectNotificationStyles();
@@ -274,37 +334,53 @@
     .querySelectorAll('input[type="password"]')
     .forEach((Input) => ProcessPasswordInput(Input, CurrentMode));
 
-  const Observer = new MutationObserver((Mutations) => {
-    Mutations.forEach((Mutation) => {
-      if (Mutation.addedNodes && Mutation.addedNodes.length > 0) {
+  const ObserverCallback = (MutationsList) => {
+    for (const Mutation of MutationsList) {
+      if (Mutation.type === "childList" && Mutation.addedNodes.length > 0) {
         Mutation.addedNodes.forEach((Node) => {
           if (
             Node.nodeType === Node.ELEMENT_NODE &&
-            Node.tagName === "INPUT" &&
-            Node.type === "password" &&
-            !Node.dataset.passwordProcessed
+            Node.matches &&
+            Node.matches('input[type="password"]') &&
+            !Node.hasAttribute(ProcessedAttribute)
           ) {
             ProcessPasswordInput(Node, CurrentMode);
           } else if (
             Node.nodeType === Node.ELEMENT_NODE &&
             Node.querySelectorAll
           ) {
-            const PasswordInputs = Node.querySelectorAll(
-              'input[type="password"]:not([data-password-processed])'
+            const DescendantInputs = Node.querySelectorAll(
+              `input[type="password"]:not([${ProcessedAttribute}])`
             );
-            PasswordInputs.forEach((Input) =>
+            DescendantInputs.forEach((Input) =>
               ProcessPasswordInput(Input, CurrentMode)
             );
           }
         });
+      } else if (
+        Mutation.type === "attributes" &&
+        Mutation.attributeName === "type"
+      ) {
+        const TargetInput = Mutation.target;
+        if (
+          TargetInput.nodeType === Node.ELEMENT_NODE &&
+          TargetInput.matches &&
+          TargetInput.matches('input[type="password"]') &&
+          !TargetInput.hasAttribute(ProcessedAttribute)
+        ) {
+          ProcessPasswordInput(TargetInput, CurrentMode);
+        }
       }
-    });
-  });
+    }
+  };
 
+  const Observer = new MutationObserver(ObserverCallback);
   Observer.observe(document.body, {
     childList: true,
     subtree: true,
+    attributes: true,
+    attributeFilter: ["type"],
   });
 
-  GM_registerMenuCommand(LocalizedCommandText, ToggleMode);
+  RegisterModeMenuCommands();
 })();
