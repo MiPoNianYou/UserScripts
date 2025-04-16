@@ -12,8 +12,8 @@
 | 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📝 更新日志 |
 | :-: | :-: | :-: | :-: |
 | 网页枷锁破除 | 解除网页右键/选择/复制及拖拽限制 恢复自由交互体验 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) | [**V1.1.2**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
-| 密码显示助手 | 通过鼠标悬浮或双击来显示密码框内容 <BR> 可通过脚本菜单切换触发方式 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) |
-| DeepSeek快捷键 | 为DeepSeek提供快捷键支持（Mac & Windows） | [**Greasy Fork**](https://greasyfork.org/scripts/532221) |
+| 密码显示助手 | 通过鼠标悬浮/双击/始终显示来显示密码框内容 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
+| DeepSeek快捷键 | 为DeepSeek提供快捷键支持 | [**Greasy Fork**](https://greasyfork.org/scripts/532221) |
 | DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [**Greasy Fork**](https://greasyfork.org/scripts/532614) |
 
 ---
