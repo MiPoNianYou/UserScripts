@@ -12,7 +12,7 @@
 | 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📝 更新日志 |
 | :-: | :-: | :-: | :-: |
 | 网页枷锁破除 | 解除网页**右键/选择/复制及拖拽限制** 恢复自由交互体验 | [Greasy Fork](https://greasyfork.org/scripts/532010) | [**V1.1.2**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
-| [**密码显示助手**](https://github.com/MiPoNianYou/UserScripts/blob/5be2e2425a0a03aa623bdfe9d231f66fe2ca17c2/Introduce/PasswordRevealerIntroduce.md) | 提供三种方式查看密码 鼠标**悬浮**/**双击**输入框/**始终显示**密码内容 | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
+| [**密码显示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introduce/PasswordRevealerIntroduce.md) | 提供三种方式查看密码 鼠标**悬浮**/**双击**输入框/**始终显示**密码内容 | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
 | DeepSeek快捷键 | 为DeepSeek提供快捷键支持 | [Greasy Fork](https://greasyfork.org/scripts/532221) |
 | DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [Greasy Fork](https://greasyfork.org/scripts/532614) |
 
@@ -56,3 +56,5 @@
 | 魔改成灭霸手套版 | 不开源那你多少沾点出生 |
 
 > Copyright © 2025 [**念柚**](https://github.com/MiPoNianYou)
+
+<!-- ？布什隔门 你MarkDown都要看Raw啊？ -->
