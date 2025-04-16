@@ -6,26 +6,19 @@
 
 ---
 
-## 💩 乐色脚本清单
-> 详细功能介绍请前往Greasy Fork查看
+## 💩 乐色清单
+> 部分详细功能介绍请前往Greasy Fork查看
 
 | 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📝 更新日志 |
 | :-: | :-: | :-: | :-: |
-| 网页枷锁破除 | 解除网页右键/选择/复制及拖拽限制 恢复自由交互体验 | [**Greasy Fork**](https://greasyfork.org/scripts/532010) | [**V1.1.2**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
-| 密码显示助手 | 通过鼠标悬浮/双击/始终显示来显示密码框内容 | [**Greasy Fork**](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
-| DeepSeek快捷键 | 为DeepSeek提供快捷键支持 | [**Greasy Fork**](https://greasyfork.org/scripts/532221) |
-| DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [**Greasy Fork**](https://greasyfork.org/scripts/532614) |
+| 网页枷锁破除 | 解除网页**右键/选择/复制及拖拽限制** 恢复自由交互体验 | [Greasy Fork](https://greasyfork.org/scripts/532010) | [**V1.1.2**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
+| [**密码显示助手**](https://github.com/MiPoNianYou/UserScripts/blob/5be2e2425a0a03aa623bdfe9d231f66fe2ca17c2/Introduce/PasswordRevealerIntroduce.md) | 提供三种方式查看密码 鼠标**悬浮**/**双击**输入框/**始终显示**密码内容 | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
+| DeepSeek快捷键 | 为DeepSeek提供快捷键支持 | [Greasy Fork](https://greasyfork.org/scripts/532221) |
+| DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [Greasy Fork](https://greasyfork.org/scripts/532614) |
 
 ---
 
 ## 📷 功能展示
-
-**密码显示助手**
-<details>
-<summary>点击展开/收合</summary>
-
-![PasswordRevealerFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/PasswordRevealerFeature.png?raw=true "PasswordRevealerFeature")
-</details>
 
 **DeepSeek快捷键**
 <details>
