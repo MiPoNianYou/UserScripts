@@ -5,226 +5,294 @@
 // @description        Keyboard Shortcuts For DeepSeek (Mac & Windows)
 // @description:zh-CN  为DeepSeek提供快捷键支持（Mac & Windows）
 // @description:zh-TW  為DeepSeek提供快捷鍵支持（Mac & Windows）
-// @version            1.2.0
-// @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutIcon.svg
+// @version            1.3.0
+// @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DeepSeekShortcutsIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
 // @supportURL         https://github.com/MiPoNianYou/UserScripts/issues
 // @license            GPL-3.0
 // @match              https://chat.deepseek.com/*
-// @grant              none
+// @grant              GM_addStyle
 // ==/UserScript==
 
 (function () {
   "use strict";
 
-  const CreateButtonFinder = (selector, text) => () =>
-    Array.from(document.querySelectorAll(selector)).find(
-      (btn) => btn.textContent?.includes(text) || btn.querySelector(text)
-    );
-
-  const FindRegenBtn = CreateButtonFinder(".ds-icon-button", "#重新生成");
-  const FindContinueBtn = CreateButtonFinder(".ds-button", "继续生成");
-  const FindDeepThinkBtn = CreateButtonFinder(".ds-button span", "深度思考");
-  const FindSearchBtn = CreateButtonFinder(".ds-button span", "联网搜索");
-  const FindUploadBtn = () => document.querySelector(".f02f0e25");
-  const FindNewChatBtn = () => document.querySelector("._217e214");
-  const FindToggleSidebarBtn = () =>
-    document
-      .querySelector(
-        ".ds-icon-button svg #打开边栏0730, .ds-icon-button svg #折叠边栏0730"
-      )
-      ?.closest(".ds-icon-button");
-  const FindChatMenuBtn = () => {
-    const SelectedChat = document.querySelector("._83421f9.b64fb9ae");
-    return SelectedChat?.querySelector("._2090548");
-  };
-
-  const GetModifierKey = () => {
-    const UA = navigator.userAgent;
-    const IsMac = /Macintosh|Mac OS X/i.test(UA);
-    return {
-      Character: IsMac ? "Control" : "Alt",
-      Property: IsMac ? "ctrlKey" : "altKey",
-      IsMac,
-    };
-  };
-
-  const ModifierKey = GetModifierKey();
-  const HelpItems = [
-    [`${ModifierKey.Character} + R`, "重新生成回答"],
-    [`${ModifierKey.Character} + C`, "继续生成回答"],
-    [`${ModifierKey.Character} + D`, "深度思考模式"],
-    [`${ModifierKey.Character} + S`, "联网搜索模式"],
-    [`${ModifierKey.Character} + U`, "上传文件文件"],
-    [`${ModifierKey.Character} + N`, "新建对话窗口"],
-    [`${ModifierKey.Character} + T`, "切换开关边栏"],
-    [`${ModifierKey.Character} + I`, "当前对话菜单"],
-    [`${ModifierKey.Character} + H`, "快捷按键帮助"],
-  ];
-
-  const CreateHelpOverlay = () => {
-    const Overlay = document.createElement("div");
-    Overlay.style.cssText = `
+  const Styles = `
+    .DsShortcutsHelpOverlay {
+      --ds-overlay-bg-color: rgba(44, 44, 46, 0.85);
+      --ds-overlay-text-color: rgba(255, 255, 255, 0.9);
+      --ds-overlay-secondary-text-color: rgba(235, 235, 245, 0.6);
+      --ds-overlay-border-color: rgba(84, 84, 88, 0.65);
+      --ds-overlay-padding: 24px;
+      --ds-overlay-radius: 12px;
+      --ds-key-bg-color: rgba(118, 118, 128, 0.24);
+      --ds-warning-bg-color: rgba(118, 118, 128, 0.24);
+      --ds-warning-border-color: rgba(84, 84, 88, 0.65);
+      --ds-warning-text-color: rgb(255, 159, 10);
+      --ds-font-stack: system-ui, sans-serif;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.95);
       z-index: 9999;
       pointer-events: none;
-
+      visibility: hidden;
       min-width: 280px;
-      padding: 24px;
-      border: 0.5px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-
-      background: rgba(28, 28, 30, 0.9);
+      padding: var(--ds-overlay-padding);
+      border: 0.5px solid var(--ds-overlay-border-color);
+      border-radius: var(--ds-overlay-radius);
+      background: var(--ds-overlay-bg-color);
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(20px) saturate(180%);
-
-      color: rgba(255, 255, 255, 0.95);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      color: var(--ds-overlay-text-color);
+      font-family: var(--ds-font-stack);
       font-size: 14px;
       font-weight: 500;
       line-height: 1.5;
-
       opacity: 0;
-      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    `;
-
-    const Title = document.createElement("h3");
-    Title.textContent = "快捷按键指北";
-    Title.style.cssText = `
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.3s;
+    }
+    .DsShortcutsHelpOverlay.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+    .DsShortcutsHelpTitle {
       margin: 0 0 20px 0;
       width: 100%;
-
-      color: rgba(255, 255, 255, 0.9);
+      color: var(--ds-overlay-text-color);
       font-size: 16px;
       font-weight: 600;
       text-align: center;
-    `;
-
-    const List = document.createElement("div");
-    HelpItems.forEach(([key, desc]) => {
-      const Row = document.createElement("div");
-      Row.style.cssText = `
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        padding: 5px 0;
-
-        border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
-      `;
-      if (HelpItems.indexOf([key, desc]) === HelpItems.length - 1) {
-        Row.style.borderBottom = "none";
-        Row.style.marginBottom = "0";
-      }
-
-      const KeyEl = document.createElement("span");
-      KeyEl.textContent = key;
-      KeyEl.style.cssText = `
-        min-width: 90px;
-        padding: 4px 8px;
-        margin-left: 16px;
-
-        background: rgba(255, 255, 255, 0.1);
-        border: 0.5px solid rgba(255, 255, 255, 0.15);
-        border-radius: 5px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-
-        color: rgba(255, 255, 255, 0.95);
-        font-family: inherit;
-        font-size: 13px;
-        text-align: center;
-
-        flex-shrink: 0;
-      `;
-
-      const DescEl = document.createElement("span");
-      DescEl.textContent = desc;
-      DescEl.style.cssText = `
-        flex-grow: 1;
-        padding-right: 10px;
-        color: rgba(255, 255, 255, 0.8);
-      `;
-
-      Row.append(DescEl, KeyEl);
-      List.append(Row);
-    });
-
-    const Warning = document.createElement("div");
-    Warning.textContent = "⚠️ 脚本依UA自动适配快捷键 篡改UA或致功能异常";
-    Warning.style.cssText = `
-      margin-top: 24px;
+    }
+    .DsShortcutsHelpList {}
+    .DsShortcutsHelpRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 5px 0;
+    }
+    .DsShortcutsHelpKey {
+      min-width: 90px;
+      padding: 4px 8px;
+      margin-left: 16px;
+      background: var(--ds-key-bg-color);
+      border: 0.5px solid var(--ds-overlay-border-color);
+      border-radius: 5px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+      color: var(--ds-overlay-text-color);
+      font-family: inherit;
+      font-size: 13px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .DsShortcutsHelpDesc {
+      flex-grow: 1;
+      padding-right: 10px;
+      color: var(--ds-overlay-secondary-text-color);
+    }
+    .DsShortcutsHelpWarning {
+      margin-top: 18px;
       padding: 12px;
-
-      background: rgba(255, 119, 119, 0.1);
-      border: 0.5px solid rgba(255, 119, 119, 0.2);
+      background: var(--ds-warning-bg-color);
+      border: 0.5px solid var(--ds-warning-border-color);
       border-radius: 8px;
-
-      color: rgba(255, 119, 119, 0.9);
+      color: var(--ds-warning-text-color);
       font-size: 12px;
       line-height: 1.5;
       text-align: center;
-    `;
+    }
+  `;
 
-    Overlay.append(Title, List, Warning);
-    document.body.append(Overlay);
-    return Overlay;
+  if (typeof GM_addStyle === "function") {
+    GM_addStyle(Styles);
+  } else {
+    const StyleElement = document.createElement("style");
+    StyleElement.textContent = Styles;
+    document.head.appendChild(StyleElement);
+  }
+
+  const CreateButtonFinder = (Selector, Text) => () =>
+    Array.from(document.querySelectorAll(Selector)).find(
+      (Button) =>
+        Button.textContent?.includes(Text) || Button.querySelector(Text)
+    );
+
+  const FindRegenButton = CreateButtonFinder(".ds-icon-button", "#重新生成");
+  const FindContinueButton = CreateButtonFinder(".ds-button", "继续生成");
+  const FindDeepThinkButton = CreateButtonFinder(".ds-button span", "深度思考");
+  const FindSearchButton = CreateButtonFinder(".ds-button span", "联网搜索");
+  const FindUploadButton = () => document.querySelector(".f02f0e25");
+  const FindNewChatButton = () => document.querySelector("._217e214");
+  const FindToggleSidebarButton = () =>
+    document
+      .querySelector(
+        ".ds-icon-button svg #打开边栏0730, .ds-icon-button svg #折叠边栏0730"
+      )
+      ?.closest(".ds-icon-button");
+  const FindChatMenuButton = () => {
+    const SelectedChat = document.querySelector("._83421f9.b64fb9ae");
+    return SelectedChat?.querySelector("._2090548");
   };
 
-  const ToggleHelpOverlay = (Overlay) => {
-    const IsVisible = parseFloat(Overlay.style.opacity || 0) > 0;
-    Overlay.style.opacity = IsVisible ? "0" : "1";
-    Overlay.style.transform = `translate(-50%, -50%) scale(${
-      IsVisible ? 0.95 : 1
-    })`;
-    Overlay.style.pointerEvents = IsVisible ? "none" : "auto";
+  const GetModifierKeyInfo = () => {
+    const IsMac = /Macintosh|Mac OS X/i.test(navigator.userAgent);
+    return {
+      Character: IsMac ? "Control" : "Alt",
+      Property: IsMac ? "ctrlKey" : "altKey",
+    };
   };
 
-  let HelpOverlay = null;
-  const InitHelpOverlay = () => {
-    if (!HelpOverlay) {
-      HelpOverlay = CreateHelpOverlay();
+  const ModifierKeyInfo = GetModifierKeyInfo();
+
+  const HelpItems = [
+    [`${ModifierKeyInfo.Character} + R`, "重新生成回答"],
+    [`${ModifierKeyInfo.Character} + C`, "继续生成回答"],
+    [`${ModifierKeyInfo.Character} + D`, "深度思考模式"],
+    [`${ModifierKeyInfo.Character} + S`, "联网搜索模式"],
+    [`${ModifierKeyInfo.Character} + U`, "上传本地文件"],
+    [`${ModifierKeyInfo.Character} + N`, "新建对话窗口"],
+    [`${ModifierKeyInfo.Character} + T`, "切换开关边栏"],
+    [`${ModifierKeyInfo.Character} + I`, "当前对话菜单"],
+    [`${ModifierKeyInfo.Character} + H`, "快捷按键帮助"],
+  ];
+
+  let HelpOverlayInstance = null;
+
+  const CreateHelpOverlay = () => {
+    const OverlayElement = document.createElement("div");
+    OverlayElement.classList.add("DsShortcutsHelpOverlay");
+
+    const TitleElement = document.createElement("h3");
+    TitleElement.textContent = "快捷按键指北";
+    TitleElement.classList.add("DsShortcutsHelpTitle");
+
+    const ListElement = document.createElement("div");
+    ListElement.classList.add("DsShortcutsHelpList");
+
+    HelpItems.forEach(([KeyShortcut, Description]) => {
+      const RowElement = document.createElement("div");
+      RowElement.classList.add("DsShortcutsHelpRow");
+
+      const KeyElement = document.createElement("span");
+      KeyElement.textContent = KeyShortcut;
+      KeyElement.classList.add("DsShortcutsHelpKey");
+
+      const DescriptionElement = document.createElement("span");
+      DescriptionElement.textContent = Description;
+      DescriptionElement.classList.add("DsShortcutsHelpDesc");
+
+      RowElement.append(DescriptionElement, KeyElement);
+      ListElement.append(RowElement);
+    });
+
+    const WarningElement = document.createElement("div");
+    WarningElement.textContent = "⚠️ 脚本依UA自动适配快捷键 篡改UA或致功能异常";
+    WarningElement.classList.add("DsShortcutsHelpWarning");
+
+    OverlayElement.append(TitleElement, ListElement, WarningElement);
+    document.body.append(OverlayElement);
+    return OverlayElement;
+  };
+
+  const HandleOutsideClick = (MouseEvent) => {
+    if (
+      HelpOverlayInstance &&
+      HelpOverlayInstance.classList.contains("visible") &&
+      !HelpOverlayInstance.contains(MouseEvent.target)
+    ) {
+      CloseHelpOverlay();
     }
   };
 
-  const SafeClick = (FinderFunc) => {
-    FinderFunc()?.click();
+  const ToggleHelpOverlay = (OverlayElement) => {
+    if (!OverlayElement) return;
+
+    const IsVisible = OverlayElement.classList.contains("visible");
+
+    if (IsVisible) {
+      OverlayElement.classList.remove("visible");
+      window.removeEventListener("click", HandleOutsideClick, true);
+    } else {
+      OverlayElement.classList.add("visible");
+      setTimeout(() => {
+        window.addEventListener("click", HandleOutsideClick, true);
+      }, 0);
+    }
   };
 
-  const KeyActions = {
-    r: () => SafeClick(FindRegenBtn),
-    c: () => SafeClick(FindContinueBtn),
-    d: () => SafeClick(FindDeepThinkBtn),
-    s: () => SafeClick(FindSearchBtn),
-    u: () => SafeClick(FindUploadBtn),
-    n: () => SafeClick(FindNewChatBtn),
-    t: () => SafeClick(FindToggleSidebarBtn),
-    i: () => SafeClick(FindChatMenuBtn),
+  const InitializeHelpOverlay = () => {
+    if (!HelpOverlayInstance) {
+      HelpOverlayInstance = CreateHelpOverlay();
+    }
+  };
+
+  const CloseHelpOverlay = () => {
+    if (
+      HelpOverlayInstance &&
+      HelpOverlayInstance.classList.contains("visible")
+    ) {
+      HelpOverlayInstance.classList.remove("visible");
+      window.removeEventListener("click", HandleOutsideClick, true);
+    }
+  };
+
+  const SafeClickElement = (FinderFunction) => {
+    const Element = FinderFunction();
+    if (Element) {
+      Element.click();
+    }
+  };
+
+  const KeyActionsMap = {
+    r: () => SafeClickElement(FindRegenButton),
+    c: () => SafeClickElement(FindContinueButton),
+    d: () => SafeClickElement(FindDeepThinkButton),
+    s: () => SafeClickElement(FindSearchButton),
+    u: () => SafeClickElement(FindUploadButton),
+    n: () => SafeClickElement(FindNewChatButton),
+    t: () => SafeClickElement(FindToggleSidebarButton),
+    i: () => SafeClickElement(FindChatMenuButton),
     h: () => {
-      InitHelpOverlay();
-      ToggleHelpOverlay(HelpOverlay);
+      InitializeHelpOverlay();
+      ToggleHelpOverlay(HelpOverlayInstance);
+      return true;
     },
   };
 
   const CreateKeyHandler = () => {
-    const IsModifierPressed = (Event) => Event[ModifierKey.Property];
+    const IsModifierPressed = (KeyboardEvent) =>
+      KeyboardEvent[ModifierKeyInfo.Property];
 
-    return (Event) => {
-      if (Event.key === "Escape" && HelpOverlay?.style.opacity === "1") {
-        ToggleHelpOverlay(HelpOverlay);
+    return (KeyboardEvent) => {
+      if (KeyboardEvent.key === "Escape") {
+        CloseHelpOverlay();
+        KeyboardEvent.preventDefault();
+        KeyboardEvent.stopPropagation();
         return;
       }
 
-      if (!IsModifierPressed(Event)) return;
-      const Key = Event.key.toLowerCase();
-      const Action = KeyActions[Key];
-      Action?.(Event) && Event.preventDefault();
+      if (!IsModifierPressed(KeyboardEvent)) {
+        return;
+      }
+
+      const PressedKey = KeyboardEvent.key.toLowerCase();
+      const ActionFunction = KeyActionsMap[PressedKey];
+
+      if (ActionFunction) {
+        const ActionResult = ActionFunction(KeyboardEvent);
+        if (ActionResult !== false) {
+          KeyboardEvent.preventDefault();
+          KeyboardEvent.stopPropagation();
+        }
+      }
     };
   };
 
-  const KeyHandler = CreateKeyHandler();
-  window.addEventListener("keydown", KeyHandler, true);
+  const GlobalKeyHandler = CreateKeyHandler();
+  window.addEventListener("keydown", GlobalKeyHandler, true);
 })();
