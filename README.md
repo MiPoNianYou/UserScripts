@@ -12,26 +12,19 @@
 | 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📝 更新日志 |
 | :-: | :-: | :-: | :-: |
 | 网页枷锁破除 | 解除网页**右键/选择/复制及拖拽限制** 恢复自由交互体验 | [Greasy Fork](https://greasyfork.org/scripts/532010) | [**V1.1.2**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
-| [**密码显示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introduce/PasswordRevealerIntroduce.md) | 提供三种方式查看密码 鼠标**悬浮**/**双击**输入框/**始终显示**密码内容 | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
-| DeepSeek快捷键 | 为DeepSeek提供快捷键支持 | [Greasy Fork](https://greasyfork.org/scripts/532221) |
+| [**密码显示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/PasswordRevealerIntroduction.md) | 提供三种方式查看密码 鼠标**悬浮**/**双击**输入框/**始终显示**密码内容 | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
+| [**DeepSeek快捷键**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DeepSeekShortcutsIntroduction.md) | 为DeepSeek提供快捷键支持 | [Greasy Fork](https://greasyfork.org/scripts/532221) | [**V1.3.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DeepSeekShortcutsUpdateLog.md) |
 | DuckDuckGo优化 | 便捷返回顶部 / 跨引擎一键搜 | [Greasy Fork](https://greasyfork.org/scripts/532614) |
 
 ---
 
 ## 📷 功能展示
 
-**DeepSeek快捷键**
-<details>
-<summary>点击展开/收合</summary>
-
-![DeepSeekShortcutsFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DeepSeekShortcutsFeature.png?raw=true "DeepSeekShortcutsFeature")
-</details>
-
 **DuckDuckGo优化**
 <details>
 <summary>点击展开/收合</summary>
 
-![DuckDuckGoOptimizationFeature](https://github.com/MiPoNianYou/UserScripts/blob/main/Images/DuckDuckGoOptimizationFeature.png?raw=true "DuckDuckGoOptimizationFeature")
+![DuckDuckGoOptimizationFeature](https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Images/DuckDuckGoOptimizationFeature.png "DuckDuckGoOptimizationFeature")
 </details>
 
 ---
@@ -57,4 +50,4 @@
 
 > Copyright © 2025 [**念柚**](https://github.com/MiPoNianYou)
 
-<!-- ？布什隔门 你MarkDown都要看Raw啊？ -->
+<!-- ？布什隔门 你连这玩意都要看Code/Raw啊？ -->
