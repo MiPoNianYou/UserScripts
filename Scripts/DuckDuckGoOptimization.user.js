@@ -5,11 +5,11 @@
 // @description        Double Click To Return The Top / Shortcuts To Other Search Engines
 // @description:zh-CN  便捷返回顶部/跨引擎一键搜
 // @description:zh-TW  便捷返回頂部/跨引擎一鍵搜
-// @version            1.1.0
+// @version            1.1.1
 // @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/DuckDuckGoOptimizationIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
-// @supportURL         https://github.com/MiPoNianYou/UserScripts/issuesx
+// @supportURL         https://github.com/MiPoNianYou/UserScripts/issues
 // @license            GPL-3.0
 // @match              https://duckduckgo.com/*
 // @grant              GM_addStyle
@@ -49,45 +49,35 @@
   .${SearchBtnGroupClass} {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     margin: 12px auto;
     padding: 0 10px;
     max-width: 800px;
     justify-content: center;
   }
   .${SearchBtnClass} {
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
-    color: #e6e6e6;
-    font-family: inherit;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    min-width: 120px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    min-width: 110px;
     text-align: center;
     flex-grow: 1;
-    flex-basis: 120px;
+    flex-basis: 110px;
     box-sizing: border-box;
+    border: 1px solid transparent;
+    background-color: rgba(60, 60, 60, 0.8);
+    color: #f5f5f7;
+    border-color: rgba(85, 85, 85, 0.9);
   }
   .${SearchBtnClass}:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    background-color: rgba(75, 75, 75, 0.9);
+    border-color: rgba(100, 100, 100, 0.9);
   }
-  @media (prefers-color-scheme: light) {
-    .${SearchBtnClass} {
-      background: #f8f9fa;
-      border-color: #ddd;
-      color: #444;
-    }
-    .${SearchBtnClass}:hover {
-      background: #f1f3f4;
-      border-color: #dadce0;
-    }
-  }
-`;
+  `;
   GM_addStyle(SearchButtonStyle);
 
   const EngineList = [
@@ -110,13 +100,13 @@
 
   function CreateSearchButtons() {
     const SearchForm = document.querySelector(SearchFormSelector);
+    const SearchInput = SearchForm?.querySelector(SearchInputSelector);
 
-    if (!SearchForm || document.querySelector(`.${SearchBtnGroupClass}`)) {
-      return;
-    }
-
-    const SearchInput = SearchForm.querySelector(SearchInputSelector);
-    if (!SearchInput) {
+    if (
+      !SearchForm ||
+      !SearchInput ||
+      document.querySelector(`.${SearchBtnGroupClass}`)
+    ) {
       return;
     }
 
@@ -132,7 +122,6 @@
       Button.addEventListener("click", (Event) => {
         Event.preventDefault();
         const Query = SearchInput.value.trim();
-
         if (Query) {
           const SearchUrl = `${Engine.Url}${encodeURIComponent(Query)}`;
           window.open(SearchUrl, "_blank", "noopener,noreferrer");
@@ -149,9 +138,16 @@
     DebounceDelay
   );
 
-  const Observer = new MutationObserver(() => {
-    DebouncedCreateSearchButtons();
-  });
+  function CheckAndMaybeCreateButtons() {
+    const SearchFormExists = document.querySelector(SearchFormSelector);
+    const ButtonsExist = document.querySelector(`.${SearchBtnGroupClass}`);
+
+    if (SearchFormExists && !ButtonsExist) {
+      DebouncedCreateSearchButtons();
+    }
+  }
+
+  const Observer = new MutationObserver(CheckAndMaybeCreateButtons);
 
   Observer.observe(document.body, {
     childList: true,
@@ -159,8 +155,8 @@
   });
 
   if (document.readyState === "loading") {
-    window.addEventListener("DOMContentLoaded", CreateSearchButtons);
+    window.addEventListener("DOMContentLoaded", CheckAndMaybeCreateButtons);
   } else {
-    CreateSearchButtons();
+    CheckAndMaybeCreateButtons();
   }
 })();
