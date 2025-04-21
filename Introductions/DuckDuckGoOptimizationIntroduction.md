@@ -1,7 +1,3 @@
-> 建议前往[**Github**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DeepSeekShortcutsIntroduction.md)以获取最佳观看体验
-
-> 什么？你已经在GitHub了？那没事了 这玩意是写给Greasy Fork用户看的 谁让GF的MarkDown支持性嫩差呢
-
 # 🗑️ 念柚嘅UserScript
 
 **🦐🐔8⃣️✍️的不知道什么乐色脚本**
