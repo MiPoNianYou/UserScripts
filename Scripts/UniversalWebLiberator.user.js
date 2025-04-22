@@ -2,10 +2,10 @@
 // @name               Universal Web Liberator
 // @name:zh-CN         网页枷锁破除
 // @name:zh-TW         網頁枷鎖破除
-// @description        Regain Control Unlocks RightClick/Selection/CopyPaste/Drag On Any Website
+// @description        Regain Control: Unlocks RightClick/Selection/CopyPaste/Drag On Any Website
 // @description:zh-CN  解除网页右键/选择/复制及拖拽限制 恢复自由交互体验
 // @description:zh-TW  解除網頁右鍵/選取/複製及拖曳限制 恢復自由互動體驗
-// @version            1.1.2
+// @version            1.2.0
 // @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/UniversalWebLiberatorIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
@@ -17,9 +17,17 @@
 // ==/UserScript==
 
 class WebLiberator {
-  static EventsToStop = ["contextmenu", "selectstart", "copy", "cut", "paste"];
+  static EventsToStop = [
+    "contextmenu",
+    "selectstart",
+    "copy",
+    "cut",
+    "paste",
+    "dragstart",
+    "drag",
+  ];
 
-  static RestrictedEventProps = [
+  static InlineEventPropsToClear = [
     "oncontextmenu",
     "onselectstart",
     "oncopy",
@@ -27,90 +35,144 @@ class WebLiberator {
     "onpaste",
     "ondrag",
     "ondragstart",
+    "onmousedown",
+    "onselect",
+    "onbeforecopy",
+    "onbeforecut",
+    "onbeforepaste",
   ];
 
+  observer = null;
+
   constructor() {
-    this.InitMutationObserver();
-    this.ExecuteCoreFeatures();
+    this.injectLiberationStyles();
+    this.bindGlobalEventHijackers();
+    this.initMutationObserver();
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        this.processExistingNodes.bind(this)
+      );
+    } else {
+      this.processExistingNodes();
+    }
   }
 
-  ExecuteCoreFeatures() {
-    this.PurgeEventListeners(document.documentElement);
-    this.InjectLiberationStyles();
-    this.BindGlobalEvents();
-    this.ProcessExistingNodes();
-  }
-
-  StopImmediatePropagationHandler(event) {
+  stopImmediatePropagationHandler(event) {
     event.stopImmediatePropagation();
   }
 
-  BindGlobalEvents() {
+  bindGlobalEventHijackers() {
     WebLiberator.EventsToStop.forEach((type) => {
       document.addEventListener(
         type,
-        this.StopImmediatePropagationHandler,
+        this.stopImmediatePropagationHandler,
         true
       );
     });
   }
 
-  InjectLiberationStyles() {
-    const StyleSheet = new CSSStyleSheet();
-    StyleSheet.replaceSync(`
+  injectLiberationStyles() {
+    const css = `
             *, *::before, *::after {
                 user-select: text !important;
+                -webkit-user-select: text !important;
+                -moz-user-select: text !important;
+                -ms-user-select: text !important;
+                cursor: auto !important;
                 -webkit-user-drag: auto !important;
                 user-drag: auto !important;
             }
-        `);
-    document.adoptedStyleSheets = [...document.adoptedStyleSheets, StyleSheet];
-  }
-
-  ProcessExistingNodes() {
-    requestIdleCallback(() => {
-      if (document.body) {
-        this.PurgeEventListeners(document.body);
-        const elements = document.body.querySelectorAll("*");
-        for (const element of elements) {
-          this.PurgeEventListeners(element);
-        }
-      }
-    });
-  }
-
-  PurgeEventListeners(element) {
-    if (!element || element.nodeType !== Node.ELEMENT_NODE) return;
-
-    for (const prop of WebLiberator.RestrictedEventProps) {
-      element[prop] = null;
+        `;
+    try {
+      const styleSheet = new CSSStyleSheet();
+      styleSheet.replaceSync(css);
+      document.adoptedStyleSheets = [
+        ...document.adoptedStyleSheets,
+        styleSheet,
+      ];
+    } catch (e) {
+      const style = document.createElement("style");
+      style.textContent = css;
+      (document.head || document.documentElement).appendChild(style);
     }
   }
 
-  HandleMutation(mutations) {
+  processExistingNodes() {
+    if (document.documentElement) {
+      this.clearHandlersRecursive(document.documentElement);
+    }
+  }
+
+  clearSingleElementHandlers(element) {
+    if (!element || element.nodeType !== Node.ELEMENT_NODE) {
+      return;
+    }
+
+    for (const prop of WebLiberator.InlineEventPropsToClear) {
+      if (element[prop]) {
+        try {
+          element[prop] = null;
+        } catch (e) {}
+      }
+      if (element.hasAttribute(prop)) {
+        try {
+          element.removeAttribute(prop);
+        } catch (e) {}
+      }
+    }
+  }
+
+  clearHandlersRecursive(rootNode) {
+    try {
+      if (rootNode.nodeType === Node.ELEMENT_NODE) {
+        this.clearSingleElementHandlers(rootNode);
+        if (rootNode.shadowRoot && rootNode.shadowRoot.mode === "open") {
+          this.clearHandlersRecursive(rootNode.shadowRoot);
+        }
+      }
+
+      const elements = rootNode.querySelectorAll("*");
+      for (const element of elements) {
+        this.clearSingleElementHandlers(element);
+        if (element.shadowRoot && element.shadowRoot.mode === "open") {
+          this.clearHandlersRecursive(element.shadowRoot);
+        }
+      }
+    } catch (error) {
+    }
+  }
+
+  handleMutation(mutations) {
     for (const mutation of mutations) {
       if (mutation.type === "childList") {
         for (const node of mutation.addedNodes) {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            this.PurgeEventListeners(node);
-            const descendants = node.querySelectorAll("*");
-            for (const child of descendants) {
-              this.PurgeEventListeners(child);
-            }
+            this.clearHandlersRecursive(node);
           }
         }
       }
     }
   }
 
-  InitMutationObserver() {
-    this.observer = new MutationObserver(this.HandleMutation.bind(this));
-    this.observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true,
-      attributes: false,
-    });
+  initMutationObserver() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    this.observer = new MutationObserver(this.handleMutation.bind(this));
+    try {
+      this.observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+        attributes: false,
+      });
+    } catch (error) {
+    }
   }
 }
 
-new WebLiberator();
+try {
+  new WebLiberator();
+} catch (error) {
+}
