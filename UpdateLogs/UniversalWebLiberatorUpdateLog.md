@@ -1,4 +1,4 @@
-# 请前往[**Github**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DeepSeekShortcutsUpdateLog.md)观看
+<!-- # 请前往[**Github**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md)观看 -->
 
 <details>
 <summary>🌐 Simplified Chinese / 简体中文</summary>
