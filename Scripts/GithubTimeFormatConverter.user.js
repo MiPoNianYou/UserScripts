@@ -5,13 +5,14 @@
 // @description        Convert relative times on GitHub to absolute date and time
 // @description:zh-CN  将 GitHub 页面上的相对时间转换为绝对日期和时间
 // @description:zh-TW  將 GitHub 頁面上的相對時間轉換成絕對日期與時間
-// @version            1.0.0
+// @version            1.0.1
 // @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/GithubTimeFormatConverterIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
 // @supportURL         https://github.com/MiPoNianYou/UserScripts/issues
 // @license            GPL-3.0
 // @match              https://github.com/*
+// @exclude            https://github.com/topics/*
 // @grant              none
 // @run-at             document-idle
 // ==/UserScript==
