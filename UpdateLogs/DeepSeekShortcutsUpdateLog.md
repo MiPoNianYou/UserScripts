@@ -1,10 +1,21 @@
+<!-- # 请前往[**Github**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DeepSeekShortcutsUpdateLog.md)观看 -->
+
 <details>
 <summary>🌐 Simplified Chinese / 简体中文</summary>
 
-- **🎨 样式重构** - 使用独立的 CSS 类重构帮助面板的样式
-- **🚀 交互增强** - 帮助面板现在可以通过点击外部区域或按 `Esc` 键关闭 提升用户体验
-- **✨ 动画改进** - 通过 CSS 类控制帮助面板的显隐 实现更平滑的过渡动画效果
-- **⚙️ 事件处理** - 优化了键盘事件处理逻辑 并增加了事件传播的阻止以减少潜在冲突
+- **✨ 新增功能**
+    - **扩展快捷键指令**
+        - `Control/Alt + Q` - 中断当前生成
+        - `Control/Alt + K` - 复制末条回答
+        - `Control/Alt + E` - 编辑末次提问
+    - **帮助面板增强**
+        - **关闭按钮** - 新增了位于面板左上角的专用关闭按钮 提供更直观的关闭方式
+        - **内容滚动** - 当快捷键列表内容超出面板高度时 现已支持滚动查看
+
+- **⚙️ 核心改进与优化**
+    - **元素定位增强:** - 重构了页面元素的查找与识别逻辑 显著提升了脚本的适应性与稳定性
+    - **界面交互优化:** - 调整了帮助面板的视觉样式与过渡动画 并优化了呼出与关闭的交互体验 响应更稳定流畅
+
 </details>
 
 ---
@@ -12,10 +23,19 @@
 <details>
 <summary>🌐 Traditional Chinese / 繁體中文</summary>
 
-- **🎨 樣式重構** - 使用獨立的 CSS 類別重構了說明面板的樣式
-- **🚀 互動增強** - 說明面板現在可以透過點擊外部區域或按 `Esc` 鍵關閉 提升使用者體驗
-- **✨ 動畫改進** - 透過 CSS 類別控制說明面板的顯示/隱藏 實現了更平滑的過渡動畫效果
-- **⚙️ 事件處理** - 優化了鍵盤事件處理邏輯 並增加了事件傳播的阻止以減少潛在衝突。
+- **✨ 新增功能**
+    - **擴展快捷鍵指令**
+        - `Control/Alt + Q` - 中斷當前生成
+        - `Control/Alt + K` - 複製末則回答
+        - `Control/Alt + E` - 編輯末則提問
+    - **幫助面板增強:**
+        - **關閉按鈕** - 新增了位於面板左上角的專用關閉按鈕 提供更直觀的關閉方式
+        - **內容滾動** - 當快捷鍵列表內容超出面板高度時 現已支援滾動檢視
+
+- **⚙️ 核心改進與優化**
+    - **元素定位增強** - 重構了頁面元素的查找與識別邏輯 顯著提升了腳本的適應性與穩定性
+    - **介面互動優化** - 調整了幫助面板的視覺樣式與過渡動畫 並優化了呼出與關閉的互動體驗 響應更穩定流暢
+
 </details>
 
 ---
@@ -23,10 +43,19 @@
 <details>
 <summary>🌐 English / 英文</summary>
 
-- **🎨 Style Refactor** - Refactored help overlay styling using dedicated CSS classes instead of inline styles.
-- **🚀 Interaction Enhancement** - The help overlay can now be closed by clicking outside of it or pressing the `Escape` key, improving user experience.
-- **✨ Animation Improvement** - Implemented smoother show/hide transition effects for the help overlay using CSS classes.
-- **⚙️ Event Handling** - Optimized keyboard event handling, and prevent potential conflicts.
+- **✨ New Features**
+    - **Expanded Keyboard Shortcuts**
+        - `Control/Alt + Q` - Stop the current response generation.
+        - `Control/Alt + K` - Copy the latest answer.
+        - `Control/Alt + E` - Edit the previous question.
+    - **Help Panel Enhancements:**
+        - **Close Button** - Added a dedicated close button in the top-left corner of the panel for a more intuitive way to dismiss it.
+        - **Content Scrolling** - The panel content is now scrollable when the list of shortcuts exceeds the panel height.
+
+- **⚙️ Core Improvements & Optimizations**
+    - **Enhanced Element Detection** - Refactored the logic for finding and identifying page elements, significantly improving the script's adaptability and stability.
+    - **Optimized UI Interaction** - Refined the visual style and transition animations of the Help Panel. Optimized the interaction for invoking and dismissing the panel for improved responsiveness and smoothness.
+
 </details>
 
 ---
