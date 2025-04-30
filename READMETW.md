@@ -10,12 +10,14 @@
 
 ## 💩 樂色清單
 
-| 🏷️ 腳本名稱 | 🔧 功能介紹 | 🔗 安裝連結 | 📝 更新日誌 |
+> 點擊腳本名稱 探索詳細功能與預覽效果
+
+| 🏷️ 腳本名稱 | 🔧 功能說明 | 🔗 安裝連結 | 📝 更新日誌 |
 | :-: | :-: | :-: | :-: |
 | [**網頁枷鎖破除**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/UniversalWebLiberatorIntroduction.md) | 解除網頁**右鍵 / 選取 / 複製 / 拖曳**限制 | [Greasy Fork](https://greasyfork.org/scripts/532010) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
 | [**密碼顯示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/PasswordRevealerIntroduction.md) | 密碼可**懸停即現 / 雙擊立顯 / 一律顯示** | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.3.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
 | [**DeepSeek 快捷鍵**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DeepSeekShortcutsIntroduction.md) | 為 DeepSeek 提供**快捷鍵**支援 | [Greasy Fork](https://greasyfork.org/scripts/532221) | [**V1.4.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DeepSeekShortcutsUpdateLog.md) |
-| [**DuckDuckGo 優化**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DuckDuckGoOptimizationIntroduction.md) | 便捷**返回頂部** / 跨引擎**一鍵搜** | [Greasy Fork](https://greasyfork.org/scripts/532614) | [**V1.1.1**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DuckDuckGoOptimizationUpdateLog.md) |
+| [**DuckDuckGo 優化**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DuckDuckGoOptimizationIntroduction.md) | **優化** DuckDuckGo 瀏覽體驗 | [Greasy Fork](https://greasyfork.org/scripts/532614) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DuckDuckGoOptimizationUpdateLog.md) |
 | [**Github 時間格式轉換**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/GithubTimeFormatConverterIntroduction.md) | 將 GitHub 頁面上的**相對時間**轉換成**絕對日期與時間** | [Greasy Fork](https://greasyfork.org/scripts/533903) | [**V1.0.1**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/GithubTimeFormatConverterUpdateLog.md) |
 
 ---
