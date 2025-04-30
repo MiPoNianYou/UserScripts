@@ -1,4 +1,4 @@
-<!-- # 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DuckDuckGoOptimizationDescription.md) 查看完整介绍 以获得最佳呈现效果 -->
+<!-- # 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/DuckDuckGoOptimizationDescription.md) 查看完整描述 以获得最佳呈现效果 -->
 
 # 🗑️ 念柚嘅UserScript
 
@@ -32,8 +32,8 @@
 | `Control / Alt + =` | 切换至**下一个**搜索类别 |
 | `Control / Alt + -` | 切换至**上一个**搜索类别 |
 
-## 📷 功能展示
-![DuckDuckGoOptimizationPreview](https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Showcases/DuckDuckGoOptimizationPreview.png "DuckDuckGoOptimizationPreview")
+## 📷 功能预览
+![DuckDuckGoOptimizationPreview](https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Previews/DuckDuckGoOptimizationPreview.png "DuckDuckGoOptimizationPreview")
 
 ---
 
