@@ -1,23 +1,19 @@
-<!-- # 请前往[**Github**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md)观看 -->
+<!-- # 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) 查看完整日志 以获得最佳呈现效果 -->
 
 <details>
 <summary>🌐 Simplified Chinese / 简体中文</summary>
 
-- **✨ 功能新增：状态切换与持久化**
-    - **🔘 悬浮按钮** - 新增页面右下角悬浮按钮，用于快速切换脚本在当前网站的启用/禁用状态。
-    - **⌨️ 快捷键支持** - 新增 `Ctrl/Meta + Alt + L` 快捷键，可快速切换脚本启用/禁用状态。
-    - **🖱️ 菜单命令** - 新增菜单命令，提供另一种切换脚本状态的方式。
-    - **💾 状态记忆** - 脚本现在会记住您在每个网站上设置的启用/禁用状态，下次访问时自动应用。
-- **✨ 功能新增：用户界面**
-    - **🔔 状态通知** - 切换脚本状态时，会弹出短暂的提示信息告知当前状态。
-    - **🎨 界面样式** - 为新的悬浮按钮和通知添加了独立的、适配系统深浅色模式的精致样式与动画效果。
-- **⚙️ 核心重构与优化**
-    - **🔌 条件激活** - 重构了核心逻辑，现在只有在脚本处于“启用”状态时，才会应用样式注入、事件拦截和DOM监控。
-    - **🖼️ Iframe 排除** - 优化了执行逻辑。
-- **🔧 代码微调与修复**
-    - **👆 交互保障** - 优化核心解锁 CSS，确保元素在移除其他限制后仍可正常交互。
-    - **🎯 精准处理** - 优化了 DOM 变动处理，避免脚本修改自身的 UI 元素。
-    - **🎨 选中样式** - 优化了强制文本选中时的背景和文字颜色样式。
+- **✨ 界面交互升级**
+    - **🎨 舒缓柔和界面** - UI 界面焕然一新 深度融合 **Catppuccin** 配色方案与 **Apple HIG** 设计规范
+    - **💫 灵动交互动画** - UI 元素的过渡动画经重新调校 采用更接近 **Apple 原生**的缓动曲线 带来更自然精致的动态效果
+    - **🌫️ 细腻阴影层次** - 为指示器及通知元素运用了更柔和更具有层次感的**多层阴影** 增强视觉质感
+    - **🎛️ 新灵动指示器** - 右下角指示器采用全新**动态设计** 以 **Catppuccin** 风格呈现 默认小巧圆点 轻点交互时**平滑扩展**显现图标 并伴有**微妙脉冲动效** 提供更生动的交互反馈
+    - **💡 浅深模式适应** - 深度适配系统浅色与深色模式 在不同模式下均能呈现对应的 **Catppuccin Latte / Frappé** 主题色彩
+
+- **⚙️ 底层重构优化**
+    - **🔧 元素处理逻辑** - 改进对页面元素的查找及事件清理的处理逻辑 确保各类网站动态加载内容场景下的**兼容性与稳定性**
+    - **⚡️ 细节性能微调** - 对部分函数的执行逻辑进行了微调 提升整体运行效率
+
 </details>
 
 ---
@@ -25,21 +21,17 @@
 <details>
 <summary>🌐 Traditional Chinese / 繁體中文</summary>
 
-- **✨ 功能新增：狀態切換與持久化**
-    - **🔘 懸浮按鈕** - 新增頁面右下角懸浮按鈕，用於快速切換腳本在當前網站的啟用/禁用狀態。
-    - **⌨️ 快捷鍵支援** - 新增 `Ctrl/Meta + Alt + L` 快捷鍵，可快速切換腳本啟用/禁用狀態。
-    - **🖱️ 菜單命令** - 新增菜單命令，提供另一種切換腳本狀態的方式。
-    - **💾 狀態記憶** - 腳本現在會記住您在每個網站上設定的啟用/禁用狀態，下次訪問時自動應用。
-- **✨ 功能新增：使用者介面**
-    - **🔔 狀態通知** - 切換腳本狀態時，會彈出短暫的提示訊息告知當前狀態。
-    - **🎨 介面樣式** - 為新的懸浮按鈕和通知添加了獨立的、適配系統深淺色模式的精緻樣式與動畫效果。
-- **⚙️ 核心重構與優化**
-    - **🔌 條件啟用** - 重構了核心邏輯，現在只有在腳本處於“啟用”狀態時，才會套用樣式注入、事件攔截和DOM監控。
-    - **🖼️ Iframe 排除** - 優化了執行邏輯。
-- **🔧 程式微調與修復**
-    - **👆 互動保障** - 優化核心解鎖 CSS，確保元素在移除其他限制後仍可正常互動。
-    - **🎯 精準處理** - 優化了 DOM 變動處理，避免腳本修改自身的 UI 元素。
-    - **🎨 選取樣式** - 優化了強制文字選取時的背景和文字顏色樣式。
+- **✨ 介面互動升級**
+    - **🎨 舒緩柔和介面** - UI 介面煥然一新 深度融合 **Catppuccin** 配色方案與 **Apple HIG** 設計規範
+    - **💫 靈動互動動畫** - UI 元素的過渡動畫經重新調校 採用更接近 **Apple 原生**的緩動曲線 帶來更自然精緻的動態效果
+    - **🌫️ 細膩陰影層次** - 為指示器及通知元素運用了更柔和更具有層次感的**多層陰影** 增強視覺質感
+    - **🎛️ 新靈動指示器** - 右下角指示器採用全新**動態設計** 以 **Catppuccin** 風格呈現 預設為小巧圓點 輕點互動時**平滑展開**顯現圖示 並伴有**細微脈衝動效** 提供更生動的互動回饋
+    - **💡 淺深模式適應** - 深度適配系統淺色與深色模式 在不同模式下均能呈現對應的 **Catppuccin Latte / Frappé** 主題色彩
+
+- **⚙️ 底層重構優化**
+    - **🔧 元素處理邏輯** - 改進對頁面元素的查找及事件清理的處理邏輯 確保各類網站動態載入內容場景下的**相容性與穩定性**
+    - **⚡️ 細節效能微調** - 對部分函式的執行邏輯進行了微調 提升整體執行效率
+
 </details>
 
 ---
@@ -47,21 +39,17 @@
 <details>
 <summary>🌐 English / 英文</summary>
 
-- **✨ Feature Added: State Toggling & Persistence**
-    - **🔘 Floating Button** - Added a floating button in the bottom-right corner to quickly toggle the script's enabled/disabled state for the current site.
-    - **⌨️ Shortcut Key Support** - Added `Ctrl/Meta + Alt + L` shortcut key to quickly toggle the script's enabled/disabled state.
-    - **🖱️ Menu Command** - Added a menu command as another way to toggle the script's state.
-    - **💾 State Memory** - The script now remembers your enabled/disabled setting for each website and applies it automatically on the next visit.
-- **✨ Feature Added: User Feedback & UI**
-    - **🔔 Status Notifications** - Displays a brief notification message indicating the current state when toggling.
-    - **🎨 UI Styling** - Added dedicated, refined styles and animations for the new floating button and notifications, adapting to system light/dark mode.
+- **✨ UI/UX Enhancements**
+    - **🎨 Refined & Harmonious Interface** - A completely refreshed UI, deeply integrating the **Catppuccin** color scheme and adhering to **Apple Human Interface Guidelines (HIG)**.
+    - **💫 Fluid Interaction Animations** - Transition animations for UI elements have been recalibrated, adopting easing curves closer to **Apple's native feel** for more natural and polished motion effects.
+    - **🌫️ Subtle Shadow Layering** - Applied softer, multi-layered shadows to indicators and notification elements, enhancing visual depth and texture.
+    - **🎛️ New Dynamic Indicator** - The bottom-right indicator boasts a new **dynamic design** in the **Catppuccin** style. It defaults to a compact dot, **smoothly expands** to reveal an icon upon tap interaction, accompanied by a **subtle pulsing effect** for livelier feedback.
+    - **💡 Seamless Light & Dark Mode Adaptation** - Deeply adapted to system Light and Dark modes, presenting corresponding **Catppuccin Latte / Frappé** theme colors accordingly.
+
 - **⚙️ Core Refactoring & Optimization**
-    - **🔌 Conditional Activation** - Refactored the core logic; style injection, event hijacking, and DOM monitoring are now only applied when the script is "enabled".
-    - **🖼️ Iframe Exclusion** - Optimized execution logic.
-- **🔧 Code Tweaks & Fixes**
-    - **👆 Interaction Guarantee** - Optimized the core unlocking CSS to ensure elements remain interactive after other restrictions are removed.
-    - **🎯 Precise Handling** - Optimized DOM mutation handling to prevent the script from modifying its own UI elements.
-    - **🎨 Selection Styling** - Improved the background and text color styling for forced text selection.
+    - **🔧 Element Handling Logic** - Enhanced logic for page element discovery and event cleanup, ensuring **compatibility and stability** across various websites, especially in dynamically loaded content scenarios.
+    - **⚡️ Performance Micro-optimizations** - Fine-tuned the execution logic for select functions, boosting overall runtime efficiency.
+
 </details>
 
 ---
