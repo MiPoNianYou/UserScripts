@@ -1,6 +1,15 @@
 # 🗑️ 念柚嘅UserScripts
 
-[![语言: 简体中文](https://img.shields.io/badge/语言-简体中文-007AFF?style=for-the-badge&logo=language&logoColor=white)](.) [![語言: 繁體中文](https://img.shields.io/badge/語言-繁體中文-8E8E93?style=for-the-badge&logo=language&logoColor=white)](https://github.com/MiPoNianYou/UserScripts/blob/main/READMETW.md)
+<p align="center">
+  <img src="https://img.shields.io/badge/语言-简体中文-8caaee?colorA=303446&style=for-the-badge">
+  <a href="https://github.com/MiPoNianYou/UserScripts/blob/main/READMETW.md"><img src="https://img.shields.io/badge/語言-繁體中文-51576d?colorA=303446&style=for-the-badge"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/MiPoNianYou/UserScripts/stargazers"><img src="https://img.shields.io/github/stars/MiPoNianYou/UserScripts?colorA=303446&colorB=babbf1&style=for-the-badge"></a>
+  <a href="https://github.com/MiPoNianYou/UserScripts/issues"><img src="https://img.shields.io/github/issues/MiPoNianYou/UserScripts?colorA=303446&colorB=ef9f76&style=for-the-badge"></a>
+  <a href="https://github.com/MiPoNianYou/UserScripts/contributors"><img src="https://img.shields.io/github/contributors/MiPoNianYou/UserScripts?colorA=303446&colorB=a6d189&style=for-the-badge"></a>
+</p>
 
 **🦐🐔8⃣️✍️的不知道什么乐色脚本**
 
@@ -12,9 +21,9 @@
 
 > 轻点脚本名称 探索详细功能与预览效果
 
-| 🏷️ 脚本名称 | 🔧 功能介绍 | 🔗 安装链接 | 📝 更新日志 |
+| 🏷️ 脚本名称 | ✨ 功能概述 | ☁️ 获取脚本 | 📜 版本历史 |
 | :-: | :-: | :-: | :-: |
-| [**网页枷锁破除**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/UniversalWebLiberatorIntroduction.md) | 解除网页**右键 / 选择 / 复制 / 拖拽**限制 | [Greasy Fork](https://greasyfork.org/scripts/532010) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
+| [**网页枷锁破除**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/UniversalWebLiberatorDescription.md) | 解除网页**右键菜单/选择文本/拷贝粘贴/拖拽内容限制 | [Greasy Fork](https://greasyfork.org/scripts/532010) | [**V1.4.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) |
 | [**密码显示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/PasswordRevealerIntroduction.md) | 密码可**悬浮即现 / 双击立显 / 一律常显** | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.3.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
 | [**DeepSeek 快捷键**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DeepSeekShortcutsIntroduction.md) | 为 DeepSeek 提供**快捷键**支持 | [Greasy Fork](https://greasyfork.org/scripts/532221) | [**V1.4.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DeepSeekShortcutsUpdateLog.md) |
 | [**DuckDuckGo 优化**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/DuckDuckGoOptimizationDescription.md) | **优化** DuckDuckGo 浏览体验 | [Greasy Fork](https://greasyfork.org/scripts/532614) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DuckDuckGoOptimizationUpdateLog.md) |
@@ -30,7 +39,7 @@
 
 ---
 
-## 📜 开源许可
+## 📃 开源许可
 
 本乐色堆采用 [**GPL-3.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/LICENSE)
 
