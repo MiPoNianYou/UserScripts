@@ -5,7 +5,7 @@
 // @description        Convert relative times on GitHub to absolute date and time
 // @description:zh-CN  将 GitHub 页面上的相对时间转换为绝对日期和时间
 // @description:zh-TW  將 GitHub 頁面上的相對時間轉換成絕對日期與時間
-// @version            1.0.1
+// @version            1.1.0
 // @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/GithubTimeFormatConverterIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
@@ -13,283 +13,499 @@
 // @license            GPL-3.0
 // @match              https://github.com/*
 // @exclude            https://github.com/topics/*
-// @grant              none
+// @grant              GM_addStyle
 // @run-at             document-idle
 // ==/UserScript==
 
 (function () {
   "use strict";
 
-  const translations = {
-    invalidDate: {
-      "zh-CN": "无效日期",
-      "zh-TW": "無效日期",
-      en: "Invalid Date",
+  const ScriptConfiguration = {
+    TOOLTIP_VERTICAL_OFFSET: 5,
+    VIEWPORT_EDGE_MARGIN: 5,
+    TRANSITION_DURATION_MS: 100,
+    UI_FONT_STACK: "-apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+    UI_FONT_STACK_MONO: "ui-monospace, SFMono-Regular, Menlo, monospace",
+  };
+
+  const ElementIdentifiers = {
+    TOOLTIP_CONTAINER_ID: "TimeConverterTooltipContainer",
+  };
+
+  const StyleClasses = {
+    PROCESSED_TIME_ELEMENT: "time-converter-processed-element",
+    TOOLTIP_IS_VISIBLE: "time-converter-tooltip--is-visible",
+  };
+
+  const UserInterfaceTextKeys = {
+    "zh-CN": {
+      INVALID_DATE_STRING: "无效日期",
+      FULL_DATE_TIME_LABEL: "完整日期:",
     },
-    fullDateLabel: {
-      "zh-CN": "完整日期",
-      "zh-TW": "完整日期",
-      en: "Full Date",
+    "zh-TW": {
+      INVALID_DATE_STRING: "無效日期",
+      FULL_DATE_TIME_LABEL: "完整日期:",
+    },
+    "en-US": {
+      INVALID_DATE_STRING: "Invalid Date",
+      FULL_DATE_TIME_LABEL: "Full Date:",
     },
   };
-  const PROCESSED_MARKER_CLASS = "gh-time-converter-processed";
-  const TOOLTIP_ID = "gh-time-converter-tooltip";
-  const TOOLTIP_STYLE_ID = `${TOOLTIP_ID}-style`;
-  const TOOLTIP_OFFSET_Y = 5;
-  const VIEWPORT_MARGIN = 5;
 
-  let tooltipElement = null;
-  let currentLanguage = "en";
+  const DomQuerySelectors = {
+    UNPROCESSED_RELATIVE_TIME: `relative-time:not(.${StyleClasses.PROCESSED_TIME_ELEMENT})`,
+    PROCESSED_TIME_SPAN: `span.${StyleClasses.PROCESSED_TIME_ELEMENT}[data-full-date-time]`,
+    RELATIVE_TIME_TAG: "relative-time",
+  };
 
-  function detectLanguage() {
-    const langs = navigator.languages || [navigator.language || "en"];
-    for (const lang of langs) {
-      const lowerLang = lang.toLowerCase();
-      if (lowerLang.startsWith("zh-cn")) return "zh-CN";
-      if (lowerLang.startsWith("zh-tw") || lowerLang.startsWith("zh-hk"))
+  let tooltipContainerElement = null;
+  let currentUserLocale = "en-US";
+  let localizedText = UserInterfaceTextKeys["en-US"];
+  let shortDateTimeFormatter = null;
+  let fullDateTimeFormatter = null;
+
+  function detectBrowserLanguage() {
+    const languages = navigator.languages || [navigator.language];
+    for (const lang of languages) {
+      const langLower = lang.toLowerCase();
+      if (langLower === "zh-cn") return "zh-CN";
+      if (
+        langLower === "zh-tw" ||
+        langLower === "zh-hk" ||
+        langLower === "zh-mo"
+      )
         return "zh-TW";
-      if (lowerLang.startsWith("zh")) return "zh-CN";
-      if (lowerLang.startsWith("en")) return "en";
+      if (langLower === "en-us") return "en-US";
+      if (langLower.startsWith("zh-")) return "zh-CN";
+      if (langLower.startsWith("en-")) return "en-US";
     }
-    return "en";
-  }
-
-  function getStr(key) {
-    return translations[key]?.[currentLanguage] || translations[key]?.en || key;
-  }
-
-  function pad(num) {
-    return String(num).padStart(2, "0");
-  }
-
-  function formatDateTime(dateInput, formatType = "short") {
-    const date =
-      typeof dateInput === "string" ? new Date(dateInput) : dateInput;
-    if (isNaN(date.getTime())) {
-      return getStr("invalidDate");
+    for (const lang of languages) {
+      const langLower = lang.toLowerCase();
+      if (langLower.startsWith("zh")) return "zh-CN";
+      if (langLower.startsWith("en")) return "en-US";
     }
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    if (formatType === "full") {
-      return `${year}-${month}-${day} ${hours}:${minutes}`;
-    }
-    return `${month}-${day} ${hours}:${minutes}`;
+    return "en-US";
   }
 
-  function injectTooltipStyles() {
-    if (document.getElementById(TOOLTIP_STYLE_ID)) return;
+  function initializeDateTimeFormatters(locale) {
+    try {
+      shortDateTimeFormatter = new Intl.DateTimeFormat(locale, {
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
 
-    const style = document.createElement("style");
-    style.id = TOOLTIP_STYLE_ID;
-    style.textContent = `
-      #${TOOLTIP_ID} {
-        position: absolute;
-        background-color: var(--color-canvas-overlay, #222);
-        color: var(--color-fg-default, #eee);
-        padding: 5px 8px;
-        border-radius: 6px;
+      fullDateTimeFormatter = new Intl.DateTimeFormat(locale, {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    } catch (e) {
+      shortDateTimeFormatter = null;
+      fullDateTimeFormatter = null;
+    }
+  }
+
+  function getLocalizedTextForKey(key) {
+    return (
+      localizedText[key] ||
+      UserInterfaceTextKeys["en-US"][key] ||
+      key.replace(/_/g, " ")
+    );
+  }
+
+  function formatDateTimeString(dateSource, formatStyle = "short") {
+    const dateObject =
+      typeof dateSource === "string" ? new Date(dateSource) : dateSource;
+
+    if (isNaN(dateObject.getTime())) {
+      return getLocalizedTextForKey("INVALID_DATE_STRING");
+    }
+
+    const formatter =
+      formatStyle === "full" ? fullDateTimeFormatter : shortDateTimeFormatter;
+
+    if (!formatter) {
+      const year = dateObject.getFullYear();
+      const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+      const day = String(dateObject.getDate()).padStart(2, "0");
+      const hours = String(dateObject.getHours()).padStart(2, "0");
+      const minutes = String(dateObject.getMinutes()).padStart(2, "0");
+      if (formatStyle === "full") {
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+      }
+      return `${month}-${day} ${hours}:${minutes}`;
+    }
+
+    try {
+      let formattedString = formatter.format(dateObject);
+      formattedString = formattedString.replace(/[/]/g, "-");
+      if (formatStyle === "full") {
+        formattedString = formattedString.replace(", ", " ");
+      } else {
+        formattedString = formattedString.replace(", ", " ");
+      }
+      return formattedString;
+    } catch (e) {
+      return getLocalizedTextForKey("INVALID_DATE_STRING");
+    }
+  }
+
+  function injectDynamicStyles() {
+    const appleEaseOutStandard = "cubic-bezier(0, 0, 0.58, 1)";
+    const transitionDuration = ScriptConfiguration.TRANSITION_DURATION_MS;
+
+    const cssStyles = `
+      :root {
+        --time-converter-tooltip-background-color-dark: rgba(48, 52, 70, 0.92);
+        --time-converter-tooltip-text-color-dark: #c6d0f5;
+        --time-converter-tooltip-border-color-dark: rgba(98, 104, 128, 0.25);
+        --time-converter-tooltip-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.2);
+
+        --time-converter-tooltip-background-color-light: rgba(239, 241, 245, 0.92);
+        --time-converter-tooltip-text-color-light: #4c4f69;
+        --time-converter-tooltip-border-color-light: rgba(172, 176, 190, 0.3);
+        --time-converter-tooltip-shadow-light: 0 1px 3px rgba(90, 90, 90, 0.08), 0 5px 10px rgba(90, 90, 90, 0.12);
+      }
+
+      #${ElementIdentifiers.TOOLTIP_CONTAINER_ID} {
+        position: fixed;
+        padding: 6px 10px;
+        border-radius: 8px;
         font-size: 12px;
         line-height: 1.4;
-        z-index: 10000;
+        z-index: 2147483647;
         pointer-events: none;
         white-space: pre;
-        display: none;
-        border: 1px solid var(--color-border-default, #444);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        max-width: 300px;
-        transition: opacity 0.1s ease-in-out;
+        max-width: 350px;
         opacity: 0;
+        visibility: hidden;
+        font-family: ${ScriptConfiguration.UI_FONT_STACK};
+        backdrop-filter: blur(10px) saturate(180%);
+        -webkit-backdrop-filter: blur(10px) saturate(180%);
+        transition: opacity ${transitionDuration}ms ${appleEaseOutStandard},
+                    visibility ${transitionDuration}ms ${appleEaseOutStandard};
+
+        background-color: var(--time-converter-tooltip-background-color-dark);
+        color: var(--time-converter-tooltip-text-color-dark);
+        border: 1px solid var(--time-converter-tooltip-border-color-dark);
+        box-shadow: var(--time-converter-tooltip-shadow-dark);
       }
-      #${TOOLTIP_ID}.visible {
-          display: block;
-          opacity: 1;
+
+      #${ElementIdentifiers.TOOLTIP_CONTAINER_ID}.${StyleClasses.TOOLTIP_IS_VISIBLE} {
+        opacity: 1;
+        visibility: visible;
       }
-      .${PROCESSED_MARKER_CLASS}[data-full-date] {
-        color: inherit;
-        font-size: inherit;
+
+      .${StyleClasses.PROCESSED_TIME_ELEMENT}[data-full-date-time] {
         display: inline-block;
         vertical-align: baseline;
-        font-family: monospace;
-        min-width: 85px;
+        font-family: ${ScriptConfiguration.UI_FONT_STACK_MONO};
+        min-width: 88px;
         text-align: right;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         cursor: help;
+        color: inherit;
+        background: none;
+        border: none;
       }
-    `;
-    document.head.appendChild(style);
-  }
 
-  function createTooltipElement() {
-    let element = document.getElementById(TOOLTIP_ID);
-    if (!element) {
-      element = document.createElement("div");
-      element.id = TOOLTIP_ID;
-      document.body.appendChild(element);
-    }
-    return element;
-  }
-
-  function showTooltip(targetSpan) {
-    const fullDate = targetSpan.dataset.fullDate;
-    if (!fullDate || !tooltipElement) return;
-
-    const fullDateLabel = getStr("fullDateLabel");
-    tooltipElement.textContent = `${fullDateLabel} ${fullDate}`;
-
-    const rect = targetSpan.getBoundingClientRect();
-
-    tooltipElement.classList.add("visible");
-    tooltipElement.style.left = "-9999px";
-    tooltipElement.style.top = "-9999px";
-
-    const tooltipWidth = tooltipElement.offsetWidth;
-    const tooltipHeight = tooltipElement.offsetHeight;
-
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    let desiredLeft = rect.left + rect.width / 2 - tooltipWidth / 2;
-    const minLeft = VIEWPORT_MARGIN;
-    const maxLeft = viewportWidth - tooltipWidth - VIEWPORT_MARGIN;
-    desiredLeft = Math.max(minLeft, Math.min(desiredLeft, maxLeft));
-
-    let desiredTop;
-    const spaceAbove = rect.top - TOOLTIP_OFFSET_Y;
-    const spaceBelow = viewportHeight - rect.bottom - TOOLTIP_OFFSET_Y;
-
-    const fitsAbove = spaceAbove >= tooltipHeight + VIEWPORT_MARGIN;
-    const fitsBelow = spaceBelow >= tooltipHeight + VIEWPORT_MARGIN;
-
-    if (fitsAbove) {
-      desiredTop = rect.top - tooltipHeight - TOOLTIP_OFFSET_Y;
-    } else if (fitsBelow) {
-      desiredTop = rect.bottom + TOOLTIP_OFFSET_Y;
-    } else {
-      if (spaceAbove > spaceBelow) {
-        desiredTop = Math.max(
-          VIEWPORT_MARGIN,
-          rect.top - tooltipHeight - TOOLTIP_OFFSET_Y
-        );
-      } else {
-        desiredTop = Math.min(
-          viewportHeight - tooltipHeight - VIEWPORT_MARGIN,
-          rect.bottom + TOOLTIP_OFFSET_Y
-        );
-        if (desiredTop < VIEWPORT_MARGIN) {
-          desiredTop = VIEWPORT_MARGIN;
+      @media (prefers-color-scheme: light) {
+        #${ElementIdentifiers.TOOLTIP_CONTAINER_ID} {
+          background-color: var(--time-converter-tooltip-background-color-light);
+          color: var(--time-converter-tooltip-text-color-light);
+          border: 1px solid var(--time-converter-tooltip-border-color-light);
+          box-shadow: var(--time-converter-tooltip-shadow-light);
         }
       }
-    }
+    `;
+    try {
+      GM_addStyle(cssStyles);
+    } catch (e) {}
+  }
 
-    tooltipElement.style.left = `${desiredLeft}px`;
-    tooltipElement.style.top = `${desiredTop}px`;
+  function ensureTooltipContainerExists() {
+    tooltipContainerElement = document.getElementById(
+      ElementIdentifiers.TOOLTIP_CONTAINER_ID
+    );
+    if (!tooltipContainerElement && document.body) {
+      tooltipContainerElement = document.createElement("div");
+      tooltipContainerElement.id = ElementIdentifiers.TOOLTIP_CONTAINER_ID;
+      tooltipContainerElement.setAttribute("role", "tooltip");
+      tooltipContainerElement.setAttribute("aria-hidden", "true");
+      try {
+        if (document.body) {
+          document.body.appendChild(tooltipContainerElement);
+        }
+      } catch (e) {}
+    }
+    return tooltipContainerElement;
+  }
+
+  function displayTooltipNearElement(targetElement) {
+    const fullDateTime = targetElement.dataset.fullDateTime;
+    ensureTooltipContainerExists();
+
+    if (!fullDateTime || !tooltipContainerElement) return;
+
+    const label = getLocalizedTextForKey("FULL_DATE_TIME_LABEL");
+    tooltipContainerElement.textContent = `${label} ${fullDateTime}`;
+    tooltipContainerElement.setAttribute("aria-hidden", "false");
+
+    const targetRect = targetElement.getBoundingClientRect();
+    tooltipContainerElement.classList.add(StyleClasses.TOOLTIP_IS_VISIBLE);
+
+    tooltipContainerElement.style.left = "-9999px";
+    tooltipContainerElement.style.top = "-9999px";
+    tooltipContainerElement.style.visibility = "hidden";
+
+    requestAnimationFrame(() => {
+      if (!tooltipContainerElement || !targetElement.isConnected) {
+        hideTooltip();
+        return;
+      }
+
+      const tooltipWidth = tooltipContainerElement.offsetWidth;
+      const tooltipHeight = tooltipContainerElement.offsetHeight;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      const verticalOffset = ScriptConfiguration.TOOLTIP_VERTICAL_OFFSET;
+      const margin = ScriptConfiguration.VIEWPORT_EDGE_MARGIN;
+
+      let tooltipLeft =
+        targetRect.left + targetRect.width / 2 - tooltipWidth / 2;
+      tooltipLeft = Math.max(margin, tooltipLeft);
+      tooltipLeft = Math.min(
+        viewportWidth - tooltipWidth - margin,
+        tooltipLeft
+      );
+
+      let tooltipTop;
+      const spaceAbove = targetRect.top - verticalOffset;
+      const spaceBelow = viewportHeight - targetRect.bottom - verticalOffset;
+
+      if (spaceAbove >= tooltipHeight + margin) {
+        tooltipTop = targetRect.top - tooltipHeight - verticalOffset;
+      } else if (spaceBelow >= tooltipHeight + margin) {
+        tooltipTop = targetRect.bottom + verticalOffset;
+      } else {
+        if (spaceAbove > spaceBelow) {
+          tooltipTop = Math.max(
+            margin,
+            targetRect.top - tooltipHeight - verticalOffset
+          );
+        } else {
+          tooltipTop = Math.min(
+            viewportHeight - tooltipHeight - margin,
+            targetRect.bottom + verticalOffset
+          );
+          if (tooltipTop < margin) {
+            tooltipTop = margin;
+          }
+        }
+      }
+
+      tooltipContainerElement.style.left = `${tooltipLeft}px`;
+      tooltipContainerElement.style.top = `${tooltipTop}px`;
+      tooltipContainerElement.style.visibility = "visible";
+    });
   }
 
   function hideTooltip() {
-    if (tooltipElement) {
-      tooltipElement.classList.remove("visible");
+    if (tooltipContainerElement) {
+      tooltipContainerElement.classList.remove(StyleClasses.TOOLTIP_IS_VISIBLE);
+      tooltipContainerElement.setAttribute("aria-hidden", "true");
     }
   }
 
-  function processTimeElement(element) {
+  function convertRelativeTimeElement(element) {
     if (
       !element ||
       !(element instanceof Element) ||
-      element.classList.contains(PROCESSED_MARKER_CLASS)
+      element.classList.contains(StyleClasses.PROCESSED_TIME_ELEMENT)
     ) {
       return;
     }
 
-    const dateTimeString = element.getAttribute("datetime");
-    if (!dateTimeString) {
-      element.classList.add(PROCESSED_MARKER_CLASS);
+    const dateTimeAttribute = element.getAttribute("datetime");
+    if (!dateTimeAttribute) {
+      element.classList.add(StyleClasses.PROCESSED_TIME_ELEMENT);
       return;
     }
 
     try {
-      const formattedTime = formatDateTime(dateTimeString, "short");
-      const fullFormattedTime = formatDateTime(dateTimeString, "full");
+      const shortFormattedTime = formatDateTimeString(
+        dateTimeAttribute,
+        "short"
+      );
+      const fullFormattedTime = formatDateTimeString(dateTimeAttribute, "full");
 
-      if (formattedTime === getStr("invalidDate")) {
-        element.classList.add(PROCESSED_MARKER_CLASS);
+      if (
+        shortFormattedTime === getLocalizedTextForKey("INVALID_DATE_STRING") ||
+        fullFormattedTime === getLocalizedTextForKey("INVALID_DATE_STRING")
+      ) {
+        element.classList.add(StyleClasses.PROCESSED_TIME_ELEMENT);
         return;
       }
 
-      const newSpan = document.createElement("span");
-      newSpan.textContent = formattedTime;
-      newSpan.dataset.fullDate = fullFormattedTime;
-
-      newSpan.classList.add(PROCESSED_MARKER_CLASS);
+      const replacementSpan = document.createElement("span");
+      replacementSpan.textContent = shortFormattedTime;
+      replacementSpan.dataset.fullDateTime = fullFormattedTime;
+      replacementSpan.classList.add(StyleClasses.PROCESSED_TIME_ELEMENT);
 
       if (element.parentNode) {
-        element.parentNode.replaceChild(newSpan, element);
+        element.parentNode.replaceChild(replacementSpan, element);
+      } else {
+        element.classList.add(StyleClasses.PROCESSED_TIME_ELEMENT);
       }
     } catch (error) {
-      element.classList.add(PROCESSED_MARKER_CLASS);
+      element.classList.add(StyleClasses.PROCESSED_TIME_ELEMENT);
     }
   }
 
-  function convertRelativeTimes(rootNode = document.body) {
-    const timeElements = rootNode.querySelectorAll(
-      `relative-time:not(.${PROCESSED_MARKER_CLASS})`
-    );
-    timeElements.forEach(processTimeElement);
+  function processRelativeTimesInNode(targetNode = document.body) {
+    if (!targetNode || typeof targetNode.querySelectorAll !== "function") {
+      return;
+    }
+    try {
+      const timeElements = targetNode.querySelectorAll(
+        DomQuerySelectors.UNPROCESSED_RELATIVE_TIME
+      );
+      timeElements.forEach(convertRelativeTimeElement);
+    } catch (e) {}
   }
 
-  function initializeEventListeners() {
+  function setupTooltipInteractionListeners() {
     document.body.addEventListener("mouseover", (event) => {
       const targetSpan = event.target.closest(
-        `span.${PROCESSED_MARKER_CLASS}[data-full-date]`
+        DomQuerySelectors.PROCESSED_TIME_SPAN
       );
       if (targetSpan) {
-        showTooltip(targetSpan);
+        displayTooltipNearElement(targetSpan);
       }
     });
 
     document.body.addEventListener("mouseout", (event) => {
       const targetSpan = event.target.closest(
-        `span.${PROCESSED_MARKER_CLASS}[data-full-date]`
+        DomQuerySelectors.PROCESSED_TIME_SPAN
       );
-      if (targetSpan) {
+      if (
+        targetSpan &&
+        (!event.relatedTarget ||
+          !tooltipContainerElement?.contains(event.relatedTarget))
+      ) {
         hideTooltip();
       }
     });
+
+    document.body.addEventListener(
+      "focusin",
+      (event) => {
+        const targetSpan = event.target.closest(
+          DomQuerySelectors.PROCESSED_TIME_SPAN
+        );
+        if (targetSpan) {
+          displayTooltipNearElement(targetSpan);
+        }
+      },
+      true
+    );
+
+    document.body.addEventListener(
+      "focusout",
+      (event) => {
+        const targetSpan = event.target.closest(
+          DomQuerySelectors.PROCESSED_TIME_SPAN
+        );
+        if (targetSpan) {
+          hideTooltip();
+        }
+      },
+      true
+    );
   }
 
-  currentLanguage = detectLanguage();
-  injectTooltipStyles();
-  tooltipElement = createTooltipElement();
-  convertRelativeTimes(document.body);
-  initializeEventListeners();
-
-  const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === "childList") {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            const elementsToProcess = [];
-            if (node.matches(`relative-time:not(.${PROCESSED_MARKER_CLASS})`)) {
-              elementsToProcess.push(node);
+  function startObservingDomMutations() {
+    const mutationObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+          for (const addedNode of mutation.addedNodes) {
+            if (addedNode.nodeType === Node.ELEMENT_NODE) {
+              if (
+                addedNode.matches(DomQuerySelectors.UNPROCESSED_RELATIVE_TIME)
+              ) {
+                convertRelativeTimeElement(addedNode);
+              } else if (
+                addedNode.querySelector(
+                  DomQuerySelectors.UNPROCESSED_RELATIVE_TIME
+                )
+              ) {
+                const descendantElements = addedNode.querySelectorAll(
+                  DomQuerySelectors.UNPROCESSED_RELATIVE_TIME
+                );
+                descendantElements.forEach(convertRelativeTimeElement);
+              }
             }
-            node
-              .querySelectorAll(`relative-time:not(.${PROCESSED_MARKER_CLASS})`)
-              .forEach((el) => elementsToProcess.push(el));
-
-            elementsToProcess.forEach(processTimeElement);
           }
-        });
+        }
       }
-    }
-  });
+    });
 
-  const observerConfig = {
-    childList: true,
-    subtree: true,
-  };
-  observer.observe(document.body, observerConfig);
+    const observerConfiguration = {
+      childList: true,
+      subtree: true,
+    };
+
+    if (document.body) {
+      try {
+        mutationObserver.observe(document.body, observerConfiguration);
+      } catch (e) {}
+    } else {
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          if (document.body) {
+            try {
+              mutationObserver.observe(document.body, observerConfiguration);
+            } catch (e) {}
+          }
+        },
+        { once: true }
+      );
+    }
+  }
+
+  function initializeTimeConverterScript() {
+    currentUserLocale = detectBrowserLanguage();
+    localizedText =
+      UserInterfaceTextKeys[currentUserLocale] ||
+      UserInterfaceTextKeys["en-US"];
+    initializeDateTimeFormatters(currentUserLocale);
+    injectDynamicStyles();
+    ensureTooltipContainerExists();
+    processRelativeTimesInNode(document.body);
+    setupTooltipInteractionListeners();
+    startObservingDomMutations();
+  }
+
+  if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+  ) {
+    initializeTimeConverterScript();
+  } else {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeTimeConverterScript,
+      { once: true }
+    );
+  }
 })();
