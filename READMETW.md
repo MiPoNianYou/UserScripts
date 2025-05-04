@@ -27,7 +27,7 @@
 | [**密碼顯示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/PasswordRevealerIntroduction.md) | 密碼可**懸停即現 / 雙擊立顯 / 一律顯示** | [Greasy Fork](https://greasyfork.org/scripts/532524) | [**V1.3.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/PasswordRevealerUpdateLog.md) |
 | [**DeepSeek 快捷鍵**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/DeepSeekShortcutsIntroduction.md) | 為 DeepSeek 提供**快捷鍵**支援 | [Greasy Fork](https://greasyfork.org/scripts/532221) | [**V1.4.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DeepSeekShortcutsUpdateLog.md) |
 | [**DuckDuckGo 優化**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/DuckDuckGoOptimizationDescription.md) | **優化** DuckDuckGo 瀏覽體驗 | [Greasy Fork](https://greasyfork.org/scripts/532614) | [**V1.2.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DuckDuckGoOptimizationUpdateLog.md) |
-| [**Github 時間格式轉換**](https://github.com/MiPoNianYou/UserScripts/blob/main/Introductions/GithubTimeFormatConverterIntroduction.md) | 將 GitHub 頁面上的**相對時間**轉換成**絕對日期與時間** | [Greasy Fork](https://greasyfork.org/scripts/533903) | [**V1.0.1**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/GithubTimeFormatConverterUpdateLog.md) |
+| [**Github 時間格式轉換**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/GithubTimeFormatConverterDescription.md) | 將 GitHub 頁面上的**相對時間**轉換成**絕對日期與時間** | [Greasy Fork](https://greasyfork.org/scripts/533903) | [**V1.1.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/GithubTimeFormatConverterUpdateLog.md) |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ---
 
-## 📃 開源授權
+## ⚖️ 開源授權
 
 本樂色堆採用 [**GPL-3.0**](https://github.com/MiPoNianYou/UserScripts/blob/main/LICENSE)
 
