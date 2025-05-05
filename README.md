@@ -1,14 +1,16 @@
 # 🗑️ 念柚嘅UserScripts
 
 <p align="center">
-  <img src="https://img.shields.io/badge/语言-简体中文-8caaee?colorA=303446&style=for-the-badge">
-  <a href="https://github.com/MiPoNianYou/UserScripts/blob/main/READMETW.md"><img src="https://img.shields.io/badge/語言-繁體中文-51576d?colorA=303446&style=for-the-badge"></a>
+  <img src="https://img.shields.io/badge/语言-简体中文-8caaee?colorA=303446&style=for-the-badge" alt="当前语言-简体中文">
+  <a href="https://github.com/MiPoNianYou/UserScripts/blob/main/READMETW.md" title="切换到繁體中文">
+    <img src="https://img.shields.io/badge/語言-繁體中文-51576d?colorA=303446&style=for-the-badge" alt="切换到繁體中文">
+  </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/MiPoNianYou/UserScripts/stargazers"><img src="https://img.shields.io/github/stars/MiPoNianYou/UserScripts?colorA=303446&colorB=babbf1&style=for-the-badge"></a>
-  <a href="https://github.com/MiPoNianYou/UserScripts/issues"><img src="https://img.shields.io/github/issues/MiPoNianYou/UserScripts?colorA=303446&colorB=ef9f76&style=for-the-badge"></a>
-  <a href="https://github.com/MiPoNianYou/UserScripts/contributors"><img src="https://img.shields.io/github/contributors/MiPoNianYou/UserScripts?colorA=303446&colorB=a6d189&style=for-the-badge"></a>
+  <a href="https://github.com/MiPoNianYou/UserScripts/stargazers"><img alt="Stargazers" src="https://img.shields.io/github/stars/MiPoNianYou/UserScripts?colorA=303446&colorB=babbf1&style=for-the-badge&logo=starship&logoColor=babbf1"></a>
+  <a href="https://github.com/MiPoNianYou/UserScripts/issues"><img alt="Issues" src="https://img.shields.io/github/issues/MiPoNianYou/UserScripts?colorA=303446&colorB=ef9f76&style=for-the-badge&logo=github&logoColor=ef9f76"></a>
+  <a href="https://github.com/MiPoNianYou/UserScripts/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/MiPoNianYou/UserScripts?colorA=303446&colorB=a6d189&style=for-the-badge&logo=github&logoColor=a6d189"></a>
 </p>
 
 **🦐🐔8⃣️✍️的不知道什么乐色脚本**
@@ -50,6 +52,14 @@
 | 爱怎么**Copy**怎么**Copy** | **Paste后不标注**是我写的**我甘霖娘** |
 | **魔改**成灭霸手套版 | **不开源**那你多少沾点**出生** |
 
-> Copyright © 2025 [**念柚**](https://github.com/MiPoNianYou)
+<br/>
 
-<!-- ？布什隔门 你连这玩意都要看Code/Raw啊？ -->
+<p align="center"><img src="" alt="Footer Line" /></p>
+
+<p align="center">
+  <small>Copyright © 2025 <a href="https://github.com/MiPoNianYou" target="_blank">念柚</a></small>
+</p>
+
+<p align="center">
+	<a href="https://github.com/MiPoNianYou/UserScripts/blob/main/LICENSE"><img alt="License-GPL3.0" src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=GPL-3.0&logoColor=c6d0f5&colorA=303446&colorB=babbf1"/></a>
+</p>
