@@ -54,7 +54,7 @@
 
 <br/>
 
-<p align="center"><img src="" alt="Footer Line" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" alt="Footer Line" /></p>
 
 <p align="center">
   <small>Copyright © 2025 <a href="https://github.com/MiPoNianYou" target="_blank">念柚</a></small>
