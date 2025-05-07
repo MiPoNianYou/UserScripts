@@ -52,5 +52,5 @@
 </p>
 
 <p align="center">
-	<a href="https://github.com/MiPoNianYou/UserScripts/blob/main/LICENSE"><img alt="License-GPL3.0" src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=GPL-3.0&logoColor=c6d0f5&colorA=303446&colorB=babbf1"/></a>
+	<a href="https://github.com/MiPoNianYou/UserScripts/blob/main/LICENSE"><img alt="License-AGPL3.0" src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=AGPL-3.0&logoColor=c6d0f5&colorA=303446&colorB=babbf1"/></a>
 </p>
