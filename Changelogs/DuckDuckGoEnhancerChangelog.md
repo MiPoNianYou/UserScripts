@@ -1,4 +1,8 @@
-<!-- # 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/DuckDuckGoEnhancerUpdateLogs.md) 查看完整日志 以获得最佳呈现效果 -->
+<!--
+# 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/DuckDuckGoEnhancerChangelog.md) 查看完整日志 以获得最佳呈现效果
+# 建議在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/DuckDuckGoEnhancerChangelog.md) 查看完整日誌 以獲得最佳呈現效果
+# For The Most Accurate & Clear Presentation We Recommend Viewing The Full Changelog On [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/DuckDuckGoEnhancerChangelog.md)
+-->
 
 <details>
 <summary>🌐 Simplified Chinese / 简体中文</summary>
