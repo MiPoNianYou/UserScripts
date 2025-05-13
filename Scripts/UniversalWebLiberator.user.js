@@ -5,7 +5,7 @@
 // @description        Disable webpage restrictions on Right-Click / Selection / Copy / Drag | Restore a seamless interactive experience | Tap the dynamic indicator in the bottom-right corner | Use the shortcut Meta/Ctrl+Alt+L | Toggle state via the userscript menu
 // @description:zh-CN  解除网页右键菜单/选择文本/拷贝粘贴/拖拽内容限制 恢复自由交互体验 轻点右下角灵动指示器 | 使用快捷键 Meta/Ctrl+Alt+L | 油猴菜单切换状态
 // @description:zh-TW  解除網頁右鍵選單/選取文字/複製貼上/拖曳內容限制 恢復自由互動體驗 輕點右下角靈動指示器 | 使用快捷鍵 Meta/Ctrl+Alt+L | 油猴選單切換狀態
-// @version            1.4.0
+// @version            1.4.3
 // @icon               https://raw.githubusercontent.com/MiPoNianYou/UserScripts/refs/heads/main/Icons/UniversalWebLiberatorIcon.svg
 // @author             念柚
 // @namespace          https://github.com/MiPoNianYou/UserScripts
@@ -186,7 +186,8 @@
           --wl-notify-bg-dark: rgba(48, 52, 70, 0.88);
           --wl-notify-text-dark: var(--ctp-frappe-text);
           --wl-notify-title-dark: var(--ctp-frappe-text);
-          --wl-indicator-bg-dark: rgba(65, 69, 89, 0.3);
+          --wl-indicator-inactive-bg-dark: var(--ctp-frappe-surface2);
+          --wl-indicator-inactive-opacity-dark: 0.55;
           --wl-indicator-hover-bg-dark: rgba(81, 87, 109, 0.5);
           --wl-indicator-expanded-bg-dark: rgba(48, 52, 70, 0.85);
           --wl-indicator-active-bg-dark: rgba(166, 209, 137, 0.88);
@@ -197,7 +198,8 @@
           --wl-notify-bg-light: rgba(239, 241, 245, 0.88);
           --wl-notify-text-light: var(--ctp-latte-text);
           --wl-notify-title-light: var(--ctp-latte-text);
-          --wl-indicator-bg-light: rgba(204, 208, 218, 0.3);
+          --wl-indicator-inactive-bg-light: var(--ctp-latte-overlay0);
+          --wl-indicator-inactive-opacity-light: 0.65;
           --wl-indicator-hover-bg-light: rgba(188, 192, 204, 0.5);
           --wl-indicator-expanded-bg-light: rgba(239, 241, 245, 0.85);
           --wl-indicator-active-bg-light: rgba(64, 160, 43, 0.88);
@@ -299,9 +301,9 @@
           width: 12px;
           height: 12px;
           border-radius: 50%;
-          background-color: var(--wl-indicator-bg-dark);
+          background-color: var(--wl-indicator-inactive-bg-dark);
           color: var(--wl-icon-color-dark);
-          opacity: 0.4;
+          opacity: var(--wl-indicator-inactive-opacity-dark);
           overflow: hidden;
           cursor: pointer;
           backdrop-filter: blur(3px);
@@ -393,8 +395,9 @@
             color: var(--wl-notify-text-light);
           }
           #${ELEMENT_IDS.EDGE_INDICATOR} {
-            background-color: var(--wl-indicator-bg-light);
+            background-color: var(--wl-indicator-inactive-bg-light);
             color: var(--wl-icon-color-light);
+            opacity: var(--wl-indicator-inactive-opacity-light);
           }
           #${ELEMENT_IDS.EDGE_INDICATOR}:hover {
              background-color: var(--wl-indicator-hover-bg-light);
@@ -620,7 +623,6 @@
               !node.closest(`#${ELEMENT_IDS.EDGE_INDICATOR}`) &&
               !node.closest(`#${ELEMENT_IDS.STATUS_NOTIFICATION}`)
             ) {
-              clearElementInlineHandlers(node);
               clearInlineHandlersRecursively(node);
             }
           }
@@ -652,8 +654,6 @@
     isScriptActive = true;
     injectRestrictionOverrideStyles();
     registerEventInterceptors();
-    clearInlineHandlersRecursively(document.documentElement);
-    initializeDOMObserver();
   }
 
   function deactivateRestrictionOverrides() {
@@ -850,6 +850,8 @@
       displayStatusNotification("STATUS_DISABLED");
     } else {
       activateRestrictionOverrides();
+      clearInlineHandlersRecursively(document.documentElement);
+      initializeDOMObserver();
       displayStatusNotification("STATUS_ENABLED");
     }
     saveActivationState();
@@ -878,7 +880,8 @@
     ensureEdgeIndicatorExists();
     updateEdgeIndicatorPersistentState();
     if (isScriptActive) {
-      activateRestrictionOverrides();
+      clearInlineHandlersRecursively(document.documentElement);
+      initializeDOMObserver();
     }
   }
 
@@ -889,6 +892,12 @@
       localizedStrings = UI_TEXTS[currentLocale] || UI_TEXTS["en-US"];
       loadActivationState();
       updateUserScriptMenuCommand();
+
+      if (isScriptActive) {
+        injectRestrictionOverrideStyles();
+        registerEventInterceptors();
+      }
+
       document.addEventListener("keydown", handleKeyboardShortcut, {
         capture: true,
       });
