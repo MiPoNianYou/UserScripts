@@ -1,18 +1,24 @@
-<!-- # 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/UpdateLogs/UniversalWebLiberatorUpdateLog.md) 查看完整日志 以获得最佳呈现效果 -->
+<!--
+# 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/UniversalWebLiberatorChangelog.md) 查看完整日志 以获得最佳呈现效果
+# 建議在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/UniversalWebLiberatorChangelog.md) 查看完整日誌 以獲得最佳呈現效果
+# For The Most Accurate & Clear Presentation We Recommend Viewing The Full Changelog On [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/UniversalWebLiberatorChangelog.md)
+-->
+
+# V1.4.3
 
 <details>
 <summary>🌐 Simplified Chinese / 简体中文</summary>
 
-- **✨ 界面交互升级**
-    - **🎨 舒缓柔和界面** - UI 界面焕然一新 深度融合 **Catppuccin** 配色方案与 **Apple HIG** 设计规范
-    - **💫 灵动交互动画** - UI 元素的过渡动画经重新调校 采用更接近 **Apple 原生**的缓动曲线 带来更自然精致的动态效果
-    - **🌫️ 细腻阴影层次** - 为指示器及通知元素运用了更柔和更具有层次感的**多层阴影** 增强视觉质感
-    - **🎛️ 新灵动指示器** - 右下角指示器采用全新**动态设计** 以 **Catppuccin** 风格呈现 默认小巧圆点 轻点交互时**平滑扩展**显现图标 并伴有**微妙脉冲动效** 提供更生动的交互反馈
-    - **💡 浅深模式适应** - 深度适配系统浅色与深色模式 在不同模式下均能呈现对应的 **Catppuccin Latte / Frappé** 主题色彩
+- **✨ 视觉体验升级**
+    - **🎨 状态可见提升** - 右下角灵动指示器在**未启用**状态下 现采用精心择取的中性色调 并优化了其不透明度 确保在深色与浅色模式下均能**清晰辨识** 不再隐匿与背景之中 提升了对状态的感知度
 
-- **⚙️ 底层重构优化**
-    - **🔧 元素处理逻辑** - 改进对页面元素的查找及事件清理的处理逻辑 确保各类网站动态加载内容场景下的**兼容性与稳定性**
-    - **⚡️ 细节性能微调** - 对部分函数的执行逻辑进行了微调 提升整体运行效率
+- **🛠️ 核心逻辑增强**
+    - **🚀 启动流程重塑** - 优化了功能激活状态下的初始化逻辑 核心的**限制解除操作**现在会更智能地**延迟至页面 DOM 结构稳定后**执行 解决刷新页面后 功能虽为启用状态但部分内容限制偶现未能及时解除的问题
+    - **⚡️ 状态即时响应** - 增强了状态在页面加载和用户操作间的同步性 当用户切换功能状态时 对当前页面的限制解除与监控机制会**立即全面应用或撤销** 确保操作的即时响应与状态的准确反馈
+    - **🛡️ 初始时序稳固** - 尽早应用全局 CSS 覆盖和高优先级事件拦截 以最大限度防止页面早期限制 同时将对完整 DOM 树的深度处理置于更稳妥的加载节点 力求在**效能与兼容性间取得最佳平衡**
+
+- **⚙️ 内部结构精进**
+    - **🧹 变动处理优化** - 对回调逻辑中处理新增 DOM 节点的部分进行了微调 移除了潜在的冗余函数调用 提升了代码的**执行效率**
 
 </details>
 
@@ -21,16 +27,16 @@
 <details>
 <summary>🌐 Traditional Chinese / 繁體中文</summary>
 
-- **✨ 介面互動升級**
-    - **🎨 舒緩柔和介面** - UI 介面煥然一新 深度融合 **Catppuccin** 配色方案與 **Apple HIG** 設計規範
-    - **💫 靈動互動動畫** - UI 元素的過渡動畫經重新調校 採用更接近 **Apple 原生**的緩動曲線 帶來更自然精緻的動態效果
-    - **🌫️ 細膩陰影層次** - 為指示器及通知元素運用了更柔和更具有層次感的**多層陰影** 增強視覺質感
-    - **🎛️ 新靈動指示器** - 右下角指示器採用全新**動態設計** 以 **Catppuccin** 風格呈現 預設為小巧圓點 輕點互動時**平滑展開**顯現圖示 並伴有**細微脈衝動效** 提供更生動的互動回饋
-    - **💡 淺深模式適應** - 深度適配系統淺色與深色模式 在不同模式下均能呈現對應的 **Catppuccin Latte / Frappé** 主題色彩
+- **✨ 視覺體驗升級**
+    - **🎨 狀態可見提升** - 右下角靈動指示器在**未啟用**狀態下 現採用精心挑選的中性色調 並優化了其不透明度 確保在深色與淺色模式下均能**清晰辨識** 不再隱匿於背景之中 提升了對狀態的感知度
 
-- **⚙️ 底層重構優化**
-    - **🔧 元素處理邏輯** - 改進對頁面元素的查找及事件清理的處理邏輯 確保各類網站動態載入內容場景下的**相容性與穩定性**
-    - **⚡️ 細節效能微調** - 對部分函式的執行邏輯進行了微調 提升整體執行效率
+- **🛠️ 核心邏輯強化**
+    - **🚀 啟動流程重塑** - 優化了功能啟用狀態下的初始化邏輯 核心的**限制解除操作** 現在會更智慧地**延遲至頁面 DOM 結構穩定後**執行 解決重新整理頁面後 功能雖已啟用但部分內容限制偶爾未能及時解除的問題
+    - **⚡️ 狀態即時回應** - 增強了狀態在頁面載入和使用者操作間的同步性 當使用者切換功能狀態時 對當前頁面的限制解除與監控機制會**立即全面套用或撤銷** 確保操作的即時回應與狀態的準確回饋
+    - **🛡️ 初始時序穩固** - 儘早套用全域 CSS 覆蓋和高優先權事件攔截 以最大程度防止頁面早期限制 同時將對完整 DOM 樹的深度處理置於更穩妥的載入節點 力求在**效能與相容性間取得最佳平衡**
+
+- **⚙️ 內部結構精進**
+    - **🧹 變動處理優化** - 對回呼邏輯中處理新增 DOM 節點的部分進行了微調 移除了潛在的多餘函式胡椒 提升了程式碼的**執行效率**
 
 </details>
 
@@ -39,16 +45,16 @@
 <details>
 <summary>🌐 English / 英文</summary>
 
-- **✨ UI/UX Enhancements**
-    - **🎨 Refined & Harmonious Interface** - A completely refreshed UI, deeply integrating the **Catppuccin** color scheme and adhering to **Apple Human Interface Guidelines (HIG)**.
-    - **💫 Fluid Interaction Animations** - Transition animations for UI elements have been recalibrated, adopting easing curves closer to **Apple's native feel** for more natural and polished motion effects.
-    - **🌫️ Subtle Shadow Layering** - Applied softer, multi-layered shadows to indicators and notification elements, enhancing visual depth and texture.
-    - **🎛️ New Dynamic Indicator** - The bottom-right indicator boasts a new **dynamic design** in the **Catppuccin** style. It defaults to a compact dot, **smoothly expands** to reveal an icon upon tap interaction, accompanied by a **subtle pulsing effect** for livelier feedback.
-    - **💡 Seamless Light & Dark Mode Adaptation** - Deeply adapted to system Light and Dark modes, presenting corresponding **Catppuccin Latte / Frappé** theme colors accordingly.
+- **✨ Visual Experience Enhancement**
+    - **🎨 Enhanced State Visibility** - The dynamic indicator in the bottom-right corner, when **inactive**, now features a meticulously selected neutral hue with optimized opacity. This ensures it is **clearly discernible** in both dark and light modes, **preventing** it from blending into the background, thereby enhancing state awareness.
 
-- **⚙️ Core Refactoring & Optimization**
-    - **🔧 Element Handling Logic** - Enhanced logic for page element discovery and event cleanup, ensuring **compatibility and stability** across various websites, especially in dynamically loaded content scenarios.
-    - **⚡️ Performance Micro-optimizations** - Fine-tuned the execution logic for select functions, boosting overall runtime efficiency.
+- **🛠️ Core Logic Enhancements**
+    - **🚀 Revamped Startup Process** - Optimized **the** initialization logic for when the feature is active. The core **restriction-lifting operation** is now intelligently **deferred until the page's DOM structure stabilizes**, resolving an issue where, **upon page refresh**, content restrictions sometimes **failed to lift promptly** even when the feature was active.
+    - **⚡️ Instantaneous State Responsiveness** - **Enhanced** state synchronization **during page loading and user interactions**. When the user toggles the feature's state, the **restriction-lifting and monitoring mechanisms** for the current page are now **immediately and comprehensively applied or revoked**. This ensures **immediate operational response and accurate state feedback**.
+    - **🛡️ Robust Initial Sequencing** - Global CSS overrides and high-priority event interception are now applied **as early as possible** to **minimize restrictions during early page rendering**. Simultaneously, deep processing of the full DOM tree has been **shifted to a more robust loading point**, striving for an **optimal balance between performance and compatibility**.
+
+- **⚙️ Internal Structure Refinement**
+    - **🧹 Optimized Change Handling** - **Fine-tuned** the part of the callback logic that handles newly added DOM nodes, **eliminating** potential redundant function calls to **improve the code's execution efficiency**.
 
 </details>
 
