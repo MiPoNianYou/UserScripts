@@ -16,9 +16,9 @@
   <a href="https://github.com/MiPoNianYou/UserScripts/blob/main/README.md" title="切换到简体中文">
     <img src="https://img.shields.io/badge/语言-简体中文-51576d?colorA=303446&style=for-the-badge" alt="切换到简体中文">
   </a>
-  <img src="https://img.shields.io/badge/語言-繁體中文-8caaee?colorA=303446&style=for-the-badge" alt="当前语言-繁體中文">
-  <!-- <a href="https://github.com/MiPoNianYou/UserScripts/blob/main/READMEEN.md" title="切换到英文">
-    <img src="https://img.shields.io/badge/Language-English-51576d?colorA=303446&style=for-the-badge" alt="切换到英文">
+  <img src="https://img.shields.io/badge/語言-繁體中文-8caaee?colorA=303446&style=for-the-badge" alt="當前語言為繁體中文">
+  <!-- <a href="https://github.com/MiPoNianYou/UserScripts/blob/main/READMEEN.md" title="Switch To English">
+    <img src="https://img.shields.io/badge/Language-English-51576d?colorA=303446&style=for-the-badge" alt="Switch To English">
   </a> -->
 </p>
 
@@ -34,7 +34,7 @@
 
 | ![JavaScript Icon](https://raw.githubusercontent.com/catppuccin/vscode-icons/refs/heads/main/icons/frappe/javascript.svg) 腳本名稱 | ![Readme Icon](https://raw.githubusercontent.com/catppuccin/vscode-icons/refs/heads/main/icons/frappe/readme.svg) 功能說明 | ![Download Icon](https://raw.githubusercontent.com/catppuccin/vscode-icons/refs/heads/main/icons/frappe/folder_download.svg) 取得腳本 | ![ChangeLog Icon](https://raw.githubusercontent.com/catppuccin/vscode-icons/refs/heads/main/icons/frappe/changelog.svg) 版本歷史 |
 | :--: | :--: | :--: | :--: |
-| [**網頁枷鎖破除**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/UniversalWebLiberatorDescription.md) | 解除網頁**右鍵選單/選取文字/複製貼上/拖曳內容**限制 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安裝-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://greasyfork.org/scripts/532010) | [![Version](https://img.shields.io/badge/Version-V1.4.0-c6d0f5?style=for-the-badge&labelColor=303446)](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/UniversalWebLiberatorChangelog.md) |
+| [**網頁枷鎖破除**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/UniversalWebLiberatorDescription.md) | 解除網頁**右鍵選單/選取文字/複製貼上/拖曳內容**限制 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安裝-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://greasyfork.org/scripts/532010) | [![Version](https://img.shields.io/badge/Version-V1.4.3-c6d0f5?style=for-the-badge&labelColor=303446)](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/UniversalWebLiberatorChangelog.md) |
 | [**密碼顯示助手**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/PasswordRevealerDescription.md) | 密碼輸入框內容可**聚焦即顯 / 懸停即覽 / 雙擊切換 / 始終可見** | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安裝-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://greasyfork.org/scripts/532524) | [![Version](https://img.shields.io/badge/Version-V1.4.0-c6d0f5?style=for-the-badge&labelColor=303446)](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/PasswordRevealerChangelog.md) |
 | [**DeepSeek 快捷鍵**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/DeepSeekShortcutsDescription.md) | 為 DeepSeek 提供**快捷鍵**支援 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安裝-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://greasyfork.org/scripts/532221) | [![Version](https://img.shields.io/badge/Version-V1.5.0-c6d0f5?style=for-the-badge&labelColor=303446)](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/DeepSeekShortcutsChangelog.md) |
 | [**DuckDuckGo 增強**](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/DuckDuckGoEnhancerDescription.md) | **優化** DuckDuckGo 瀏覽體驗 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安裝-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://greasyfork.org/scripts/532614) | [![Version](https://img.shields.io/badge/Version-V1.3.0-c6d0f5?style=for-the-badge&labelColor=303446)](https://github.com/MiPoNianYou/UserScripts/blob/main/Changelogs/DuckDuckGoEnhancerChangelog.md) |
