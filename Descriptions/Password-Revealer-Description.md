@@ -1,5 +1,5 @@
 <!--
-# 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Password-Revealer-Description.md) 查看完整日志 以获得最佳呈现效果 <br/> 建議在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Password-Revealer-Description.md) 查看完整日誌 以獲得最佳呈現效果 <br/> For The Most Accurate & Clear Presentation We Recommend Viewing The Full Description On [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Password-Revealer-Description.md)
+# 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Password-Revealer-Description.md) 查看完整描述 以获得最佳呈现效果 <br/> 建議在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Password-Revealer-Description.md) 查看完整說明 以獲得最佳呈現效果 <br/> For The Most Accurate & Clear Presentation We Recommend Viewing The Full Description On [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Password-Revealer-Description.md)
 -->
 
 <h3 align="center">
@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MiPoNianYou/UserScripts/main/Previews/Password_Revealer_Preview.png" alt="Password_Revealer_Preview" width="100%">
+  <img src="https://raw.githubusercontent.com/MiPoNianYou/UserScripts/main/Previews/Password-Revealer-Preview.png" alt="Password_Revealer_Preview" width="100%">
 </p>
 
 <p align="center">
@@ -50,7 +50,7 @@
 
 **🌠 功能许愿** → [飞到**Discussions**祈祷](https://github.com/MiPoNianYou/UserScripts/discussions)
 
-<p align="center"><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" alt="Footer Line" /></p>
+<p align="center"><img src="" alt="Footer Line" /></p>
 
 <p align="center">
   <small>Copyright © 2025 <a href="https://github.com/MiPoNianYou" target="_blank">念柚</a></small>
