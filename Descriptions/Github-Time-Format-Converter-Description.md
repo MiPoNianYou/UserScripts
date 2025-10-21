@@ -1,11 +1,7 @@
-<!--
-# 建议在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Github-Time-Format-Converter-Description.md) 查看完整描述 以获得最佳呈现效果 <br/> 建議在 [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Github-Time-Format-Converter-Description.md) 查看完整說明 以獲得最佳呈現效果 <br/> For The Most Accurate & Clear Presentation We Recommend Viewing The Full Description On [GitHub](https://github.com/MiPoNianYou/UserScripts/blob/main/Descriptions/Github-Time-Format-Converter-Description.md)
--->
-
 <h3 align="center">
-  <img src="https://avatars.githubusercontent.com/u/206128573?v=4" width="100" alt="MiPoNianYou Avatar" style="border-radius: 50%;"/><br/>
+  <img src="https://imgtolinkx.com/i/X8cRgYRh" width="200" alt="MiPoNianYou Avatar"/><br/>
   <br/>
-  <strong>Github Time Format Converter / Github 时间格式转换</strong>
+  <strong>Github 时间格式转换 / Github Time Format Converter</strong>
   <br/>
   <small>Made By <a href="https://github.com/MiPoNianYou/">MiPoNianYou</a></small>
 </h3>
@@ -17,13 +13,13 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MiPoNianYou/UserScripts/main/Previews/Github-Time-Format-Converter-Preview.png" alt="Github-Time-Format-Converter-Preview" width="80%">
-</p>
-
-<p align="center">
   <strong>🦐🐔8⃣️✍️的不知道什么乐色脚本</strong>
   <br/>
   <small><i>我不到啊 想到啥写啥呗</i></small>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MiPoNianYou/UserScripts/main/Previews/Github-Time-Format-Converter-Preview.png" alt="Github-Time-Format-Converter-Preview" width="80%">
 </p>
 
 ## ✨ 功能全景
@@ -43,7 +39,7 @@
 
 **🌠 功能许愿** → [飞到**Discussions**祈祷](https://github.com/MiPoNianYou/UserScripts/discussions)
 
-<p align="center"><img src="" alt="Footer Line" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" alt="Footer Line" /></p>
 
 <p align="center">
   <small>Copyright © 2025 <a href="https://github.com/MiPoNianYou" target="_blank">念柚</a></small>
