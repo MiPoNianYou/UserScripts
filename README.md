@@ -1,5 +1,5 @@
 <h3 align="center">
-  <img src="https://avatars.githubusercontent.com/u/206128573?v=4" width="100" alt="MiPoNianYou Avatar" style="border-radius: 50%;"/><br/>
+  <img src="https://imgtolinkx.com/i/X8cRgYRh" width="200" alt="MiPoNianYou Avatar" "/><br/>
   <br/>
   <strong>UserScripts For Browsers</strong>
   <br/>
@@ -25,15 +25,15 @@
 | :--: | :--: | :--: | :--: |
 | [**网页枷锁破除**](./Descriptions/Universal-Web-Liberator-Description.md) | 解除网页**右键菜单/选择文本/拷贝粘贴/拖拽内容**限制 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安装-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://update.greasyfork.org/scripts/532010/Universal%20Web%20Liberator.user.js) | [![Version](https://img.shields.io/badge/Version-V1.5.5-c6d0f5?style=for-the-badge&labelColor=303446)](./Changelogs/Universal-Web-Liberator-Changelog.md) |
 | [**密码显示助手**](./Descriptions/Password-Revealer-Description.md) | 密码输入框内容可**聚焦即显 / 悬浮即览 / 双击切换 / 始终可见** | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安装-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://update.greasyfork.org/scripts/532524/Password%20Revealer.user.js) | [![Version](https://img.shields.io/badge/Version-V1.5.0-c6d0f5?style=for-the-badge&labelColor=303446)](./Changelogs/Password-Revealer-Changelog.md) |
-| [**DeepSeek 快捷键**](./Descriptions/DeepSeek-Shortcuts-Description.md) | 为 DeepSeek 提供**快捷键**支持 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安装-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://update.greasyfork.org/scripts/532221/DeepSeek%20Shortcuts.user.js) | [![Version](https://img.shields.io/badge/Version-V1.6.0-c6d0f5?style=for-the-badge&labelColor=303446)](./Changelogs/DeepSeek-Shortcuts-Changelog.md) |
 | [**DuckDuckGo 增强**](./Descriptions/DuckDuckGo-Enhancer-Description.md) | **优化** DuckDuckGo 浏览体验 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安装-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://update.greasyfork.org/scripts/532614/DuckDuckGo%20Enhancer.user.js) | [![Version](https://img.shields.io/badge/Version-V1.4.0-c6d0f5?style=for-the-badge&labelColor=303446)](./Changelogs/DuckDuckGo-Enhancer-Changelog.md) |
 | [**Github 时间格式转换**](./Descriptions/Github-Time-Format-Converter-Description.md) | 将 GitHub 页面上的**相对时间**转换为**绝对日期和时间** | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安装-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://update.greasyfork.org/scripts/533903/Github%20Time%20Format%20Converter.user.js) | [![Version](https://img.shields.io/badge/Version-V1.3.0-c6d0f5?style=for-the-badge&labelColor=303446)](./Changelogs/Github-Time-Format-Converter-Changelog.md) |
+| [**DeepSeek 快捷键（EOL）**](./Descriptions/DeepSeek-Shortcuts-Description.md) | 为 DeepSeek 提供**快捷键**支持 | [![Greasy Fork](https://img.shields.io/badge/Greasy%20Fork-安装-e5c890?style=for-the-badge&logo=tampermonkey&logoColor=e5c890&labelColor=303446)](https://update.greasyfork.org/scripts/532221/DeepSeek%20Shortcuts.user.js) | [![Version](https://img.shields.io/badge/Version-V1.6.0-c6d0f5?style=for-the-badge&labelColor=303446)](./Changelogs/DeepSeek-Shortcuts-Changelog.md) |
 
 ## 📮 投递反馈
 
-**😡 脚本寄了** → [飞到**议题**开骂](https://github.com/MiPoNianYou/UserScripts/issues)
+**😡 脚本寄了** → [飞到**Issues**开骂](https://github.com/MiPoNianYou/UserScripts/issues)
 
-**🌠 功能许愿** → [飞到**讨论**祈祷](https://github.com/MiPoNianYou/UserScripts/discussions)
+**🌠 功能许愿** → [飞到**Discussions**祈祷](https://github.com/MiPoNianYou/UserScripts/discussions)
 
 <p align="center"><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" alt="Footer Line" /></p>
 
