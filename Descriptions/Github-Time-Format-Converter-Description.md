@@ -1,15 +1,18 @@
 <h3 align="center">
-  <img src="https://imgtolinkx.com/i/X8cRgYRh" width="200" alt="MiPoNianYou Avatar"/><br/>
+  <img src="https://onw.cc/mpny-avatar-circle" width="200"/>
   <br/>
   <strong>Github 时间格式转换 / Github Time Format Converter</strong>
   <br/>
-  <small>Made By <a href="https://github.com/MiPoNianYou/">MiPoNianYou</a></small>
+  <small>Made By <a href="https://onw.cc/mpny">MiPoNianYou</a></small>
 </h3>
 
 <p align="center">
-  <a href="https://github.com/MiPoNianYou/UserScripts/stargazers"><img alt="Stargazers" src="https://img.shields.io/github/stars/MiPoNianYou/UserScripts?colorA=303446&colorB=babbf1&style=for-the-badge&logo=starship&logoColor=babbf1"></a>
-  <a href="https://github.com/MiPoNianYou/UserScripts/issues"><img alt="Issues" src="https://img.shields.io/github/issues/MiPoNianYou/UserScripts?colorA=303446&colorB=ef9f76&style=for-the-badge&logo=bugsnag&logoColor=ef9f76"></a>
-  <a href="https://github.com/MiPoNianYou/UserScripts/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/MiPoNianYou/UserScripts?colorA=303446&colorB=a6d189&style=for-the-badge&logo=github&logoColor=a6d189"></a>
+  <a href="https://onw.cc/ujs-star">
+    <img src="https://onw.cc/ujs-badges-star">
+  </a>
+  <a href="https://onw.cc/ujs-issues">
+    <img src="https://onw.cc/ujs-badges-issues">
+  </a>
 </p>
 
 <p align="center">
@@ -19,32 +22,47 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MiPoNianYou/UserScripts/main/Previews/Github-Time-Format-Converter-Preview.png" alt="Github-Time-Format-Converter-Preview" width="80%">
+  <img src="https://imgtolinkx.com/i/LDBMJX3W" width="80%">
 </p>
 
 ## ✨ 功能全景
 
-- **🕰️ 精准时间呈现** - 自动将 Github 页面上模糊的相对时间 精准转换为清晰的绝对日期与时间
-    - **🗓️ 即时日期转换** - 页面加载或内容动态更新时 所有的相对时间将被即刻转换为更具可读性的「**年-月-日**」格式
-    - **💡 悬浮精确时刻** - 当鼠标悬停在转换后的日期上时 一个精致的工具提示将浮现 清晰展示该日期的具体时分秒
+- **🕰️ 精准时间呈现** - 自动将 GitHub 页面上模糊的相对时间精准转换为清晰的绝对日期与时间
+    - **🗓️ 即时日期转换** - 页面加载或内容动态更新时 所有相对时间描述将被即刻转换为简洁易读的「**年-月-日**」格式
+    - **💡 悬浮精确时刻** - 当鼠标轻触转换后的日期时 一个精致的工具提示将优雅浮现 清晰展示该日期精确到秒的完整时刻
+    - **🛡️ 容错机制完善** - 对无效日期/缺失元素等异常情况妥善处理 确保脚本的稳定性不影响页面正常功能
 
 - **🚀 动态无缝集成** - 无论是页面初次加载还是后续动态载入的新内容 脚本都能持续监测并转换时间格式
-    - **⚡️ 动态内容感知** - 通过变动观察器智能监测页面变化 确保新增的相对时间元素也能被即使转换
-    - **🎯 精准元素定位** - 准确识别 GitHub 使用的相对时间标签 并仅对这些目标元素进行处理 避免干扰页面其他部份
-    - **⚡️ 轻量无感运行** - 精心优化的代码逻辑 旨在无缝融入 GitHub 浏览体验 不增强额外负担 保持页面的流畅性能
+    - **⚡️ 动态内容感知** - 利用高效的变动观察器持续监听页面 DOM 变化 确保 AJAX 加载与动态渲染的新时间元素也能被即时转换
+    - **🎯 精准元素定位** - 准确识别 GitHub 特定的 `relative-time` 标签 仅对这些目标元素进行处理 避免误操作页面其他部分
+    - **🔁 重复处理防护** - 为已转换元素添加专属标记类 智能去重避免重复处理造成的性能浪费与页面闪烁
+
+- **⚡️ 轻量无感运行** - 精心优化的代码逻辑 旨在无缝融入 GitHub 浏览体验 不增添额外负担 保持页面的流畅性能
+    - **🔧 高效事件委托** - 使用事件委托机制处理提示框交互 减少事件监听器数量 降低内存占用
+    - **⏱️ 智能惰性创建** - 工具提示元素仅在首次需要时才动态创建 避免不必要的 DOM 操作开销
+
+- **🎨 优雅视觉体验** - 精心雕琢的界面细节 让时间信息的展示既美观又实用
+    - **🌓 主题自动适配** - 智能感知系统深色与浅色模式 提示框背景/文字/边框/阴影随主题无缝切换
+    - **✨ 毛玻璃质感** - 运用背景模糊与饱和度增强 打造精致的半透明磨砂浮层效果
+    - **📐 智能定位算法** - 动态计算最佳显示位置 优先显示在上方 空间不足时智能调整 确保提示框始终在可视区域内不被裁切
+    - **🔤 等宽字体** - 时间信息使用系统等宽字体 确保数字对齐 提升可读性
 
 ## 📮 投递反馈
 
-**😡 脚本寄了** → [飞到**Issues**开骂](https://github.com/MiPoNianYou/UserScripts/issues)
+**😡 脚本寄了** → [飞到 **Issues** 开骂]("https://onw.cc/ujs-issues)
 
-**🌠 功能许愿** → [飞到**Discussions**祈祷](https://github.com/MiPoNianYou/UserScripts/discussions)
-
-<p align="center"><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" alt="Footer Line" /></p>
+**🌠 功能许愿** → [飞到 **Discussions** 祈祷](https://onw.cc/ujs-disc)
 
 <p align="center">
-  <small>Copyright © 2025 <a href="https://github.com/MiPoNianYou" target="_blank">念柚</a></small>
+  <img src="https://onw.cc/ujs-images-fl"/>
 </p>
 
 <p align="center">
-	<a href="https://github.com/MiPoNianYou/UserScripts/blob/main/LICENSE"><img alt="License-AGPL3.0" src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=AGPL-3.0&logoColor=c6d0f5&colorA=303446&colorB=babbf1"/></a>
+  <small>Copyright © 2025 <a href="https://onw.cc/mpny" target="_blank">念柚</a></small>
+</p>
+
+<p align="center">
+  <a href="https://onw.cc/ujs-license">
+    <img src="https://onw.cc/ujs-badges-license"/>
+  </a>
 </p>
