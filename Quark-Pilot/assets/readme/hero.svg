@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="399" viewBox="0 0 1200 399" role="img" aria-labelledby="title desc" font-family="'SF Pro Text + PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <title id="title">Quark Pilot Hero</title>
+  <desc id="desc">Quark Pilot 功能示意：浏览器端拦截 sharepage/detail 请求，改写排序参数后交回原生 XHR 发出；文件默认全选，待内容不再变化后自动取消全选。</desc>
+  <defs>
+    <filter id="paperShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#090A0E" flood-opacity="0.3" />
+    </filter>
+    <linearGradient id="inkWash" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2C2630" />
+      <stop offset="1" stop-color="#17171C" />
+    </linearGradient>
+    <linearGradient id="paperTone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF9EC" />
+      <stop offset="1" stop-color="#F6EAD7" />
+    </linearGradient>
+    <pattern id="paperGrain" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M2 6h1M13 17h1M19 4h1M7 20h1" stroke="#D5BE9D" stroke-width="1" opacity="0.18" />
+    </pattern>
+    <path id="paperEdge" d="M428 30H1142V351L1137 351L1129 361L1121 351L1113 361L1105 351L1097 361L1089 351L1081 361L1073 351L1065 361L1057 351L1049 361L1041 351L1033 361L1025 351L1017 361L1009 351L1001 361L993 351L985 361L977 351L969 361L961 351L953 361L945 351L937 361L929 351L921 361L913 351L905 361L897 351L889 361L881 351L873 361L865 351L857 361L849 351L841 361L833 351L825 361L817 351L809 361L801 351L793 361L785 351L777 361L769 351L761 361L753 351L745 361L737 351L729 361L721 351L713 361L705 351L697 361L689 351L681 361L673 351L665 361L657 351L649 361L641 351L633 361L625 351L617 361L609 351L601 361L593 351L585 361L577 351L569 361L561 351L553 361L545 351L537 361L529 351L521 361L513 351L505 361L497 351L489 361L481 351L473 361L465 351L457 361L449 351L441 361L433 351L428 351Z" />
+  </defs>
+
+  <rect width="1200" height="399" rx="28" fill="url(#inkWash)" />
+  <path d="M0 24H1200M0 375H1200" stroke="#3C3540" stroke-width="1" />
+  <circle cx="86" cy="52" r="5" fill="#E85B43" />
+  <circle cx="105" cy="52" r="5" fill="#F4C06A" />
+  <circle cx="124" cy="52" r="5" fill="#28C840" />
+
+  <g>
+    <path d="M64 108V248" stroke="#E85B43" stroke-width="5" />
+    <text x="84" y="160" fill="#FFF9EC" font-size="56" font-weight="760" letter-spacing="-1.8">Quark Pilot</text>
+    <text x="84" y="204" fill="#D4C8C1" font-size="21">自动按更新时间排序</text>
+    <text x="84" y="236" fill="#D4C8C1" font-size="21">等网页内容不再变化，再取消全选</text>
+    <path d="M84 276H350" stroke="#645663" stroke-width="1.5" />
+    <path d="M84 299h16m8 0h4m8 0h16m8 0h4m8 0h24m8 0h4m8 0h16m8 0h4m8 0h26m8 0h4m8 0h16m8 0h4m8 0h24" stroke="#E85B43" stroke-width="3" stroke-linecap="square" />
+    <path d="M84 323H238" stroke="#5A4E60" stroke-width="2" stroke-dasharray="2 9" />
+  </g>
+
+  <use href="#paperEdge" fill="#0B0A0E" opacity="0.34" transform="translate(0 8)" />
+  <use href="#paperEdge" fill="url(#paperTone)" filter="url(#paperShadow)" />
+  <use href="#paperEdge" fill="url(#paperGrain)" opacity="0.65" />
+
+  <g>
+    <path d="M466 57H1104" stroke="#D8C7AD" stroke-width="1" stroke-dasharray="2 6" />
+    <path d="M466 48h16m8 0h16m8 0h16m8 0h16m8 0h16" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" />
+    <text x="466" y="82" fill="#D14F3D" font-size="18" font-weight="700" letter-spacing="1.1">01 / 请求拦截与改写</text>
+    <text x="1104" y="82" fill="#8D716D" font-size="16" font-weight="700" text-anchor="end">XHR 拦截边界</text>
+    <path d="M466 98H1104" stroke="#D8C7AD" stroke-width="1.5" />
+
+    <g transform="translate(466 106)">
+      <rect width="170" height="112" rx="10" fill="#F6EAD7" stroke="#D8C7AD" stroke-width="1.5" />
+      <text x="14" y="24" fill="#8D716D" font-size="13" font-weight="700">捕获</text>
+      <text x="14" y="50" fill="#2B2730" font-size="15" font-family="'Maple Mono NF CN', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">sharepage/detail</text>
+      <text x="14" y="75" fill="#776D6A" font-size="14">匹配 XHR 请求路径</text>
+    </g>
+
+    <path d="M648 162H678" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M671 155L680 162L671 169" fill="none" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+    <g transform="translate(690 106)">
+      <rect width="198" height="112" rx="10" fill="#2C2630" stroke="#E85B43" stroke-width="2.5" />
+      <text x="14" y="24" fill="#F4C06A" font-size="13" font-weight="700">拦截并改写</text>
+      <text x="14" y="50" fill="#FFF9EC" font-size="17" font-weight="700">XHR.open</text>
+      <text x="14" y="75" fill="#D4C8C1" font-size="13" font-family="'Maple Mono NF CN', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">_sort = file_type:asc,</text>
+      <text x="14" y="96" fill="#E85B43" font-size="13" font-family="'Maple Mono NF CN', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">updated_at:desc</text>
+    </g>
+
+    <path d="M900 162H930" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M923 155L932 162L923 169" fill="none" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+    <g transform="translate(942 106)">
+      <rect width="162" height="112" rx="10" fill="#F6EAD7" stroke="#D8C7AD" stroke-width="1.5" />
+      <text x="14" y="24" fill="#8D716D" font-size="13" font-weight="700">交回原生</text>
+      <text x="14" y="50" fill="#2B2730" font-size="15" font-family="'Maple Mono NF CN', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">XMLHttpRequest</text>
+      <text x="14" y="75" fill="#A44339" font-size="14">继续发出请求</text>
+    </g>
+    <path d="M466 231H1104" stroke="#D8C7AD" stroke-width="1.5" />
+
+    <text x="466" y="261" fill="#D14F3D" font-size="18" font-weight="700" letter-spacing="1.1">02 / 默认全选</text>
+    <text x="1104" y="261" fill="#8D716D" font-size="16" font-weight="700" text-anchor="end">逻辑示意</text>
+    <path d="M466 276H1104" stroke="#D8C7AD" stroke-width="1.5" stroke-dasharray="2 6" />
+    <g transform="translate(466 291)">
+      <rect x="0" y="0" width="22" height="22" fill="#D9563E" />
+      <path d="M5 11L9 15L17 6" fill="none" stroke="#FFF9EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <rect x="31" y="0" width="22" height="22" fill="#D9563E" />
+      <path d="M36 11L40 15L48 6" fill="none" stroke="#FFF9EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <rect x="62" y="0" width="22" height="22" fill="#D9563E" />
+      <path d="M67 11L71 15L79 6" fill="none" stroke="#FFF9EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="101" y="17" fill="#2B2730" font-size="17" font-weight="500">默认全选</text>
+    </g>
+    <path d="M688 302H739" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M731 295L740 302L731 309" fill="none" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    <g transform="translate(774 291)">
+      <rect x="0" y="0" width="22" height="22" fill="none" stroke="#8A7D78" stroke-width="2" />
+      <rect x="31" y="0" width="22" height="22" fill="none" stroke="#8A7D78" stroke-width="2" />
+      <rect x="62" y="0" width="22" height="22" fill="none" stroke="#8A7D78" stroke-width="2" />
+    </g>
+    <text x="875" y="308" fill="#A44339" font-size="15" font-weight="500">内容不再变化后取消全选</text>
+    <path d="M466 329H1104" stroke="#D8C7AD" stroke-width="1.5" />
+    <path d="M466 339h16m8 0h16m8 0h16m8 0h16m8 0h16m8 0h16m8 0h16m8 0h16" stroke="#E85B43" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+</svg>
